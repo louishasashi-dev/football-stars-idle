@@ -192,3 +192,17 @@ return [
 ];
 
 ## 📂 Struktur Proyek
+
+football-stars-idle/
+├── api/ # Backend endpoints (PHP)
+├── assets/
+│ ├── css/ # Styling (main, card, shop, lineup, dashboard)
+│ ├── images/ # Gambar pemain, banner, icons
+│ └── js/ # JavaScript engine (gacha, match, lineup, dll)
+├── auth/ # Login, register, session handling
+├── config/ # Database & app configuration
+├── database/ # SQL dump & migrations
+├── includes/ # Header, footer, functions
+├── pages/ # Semua halaman frontend
+├── .htaccess # Apache rewrite rules
+└── index.php # Entry point (redirect ke dashboard)
