@@ -1,0 +1,83 @@
+.celestial-banner-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.celestial-banner {
+  background: linear-gradient(135deg, #1a0a2e, #2d1b69, #4a1a6b);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #7b2fbe, #ff6ec7, #00d4ff) 1;
+  animation: celestialBannerGlow 3s ease-in-out infinite;
+}
+
+.celestial-banner-content {
+  position: relative;
+  z-index: 2;
+}
+
+.celestial-banner-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #ff6ec7, #7b2fbe, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(123, 47, 190, 0.3);
+  letter-spacing: 0.1em;
+}
+
+.celestial-banner-sub {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+.celestial-banner-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 1.5rem;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #7b2fbe, #ff6ec7);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+.celestial-banner-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(123, 47, 190, 0.2) 0%,
+    transparent 60%
+  );
+  animation: celestialBannerPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes celestialBannerGlow {
+  0%,
+  100% {
+    border-image: linear-gradient(45deg, #7b2fbe, #ff6ec7, #00d4ff) 1;
+  }
+  50% {
+    border-image: linear-gradient(45deg, #ff6ec7, #00d4ff, #7b2fbe) 1;
+  }
+}
+
+@keyframes celestialBannerPulse {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}

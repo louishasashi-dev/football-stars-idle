@@ -1,0 +1,761 @@
+/* ============================================================
+   LINEUP.CSS — Clean & Rapi
+   ============================================================ */
+
+.lineup-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .lineup-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── FIELD ───────────────────────────────────────────────── */
+.field-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.field {
+  background: linear-gradient(
+    180deg,
+    #1a4a1a 0%,
+    #1e5c1e 10%,
+    #1a4a1a 20%,
+    #1e5c1e 30%,
+    #1a4a1a 40%,
+    #1e5c1e 50%,
+    #1a4a1a 60%,
+    #1e5c1e 70%,
+    #1a4a1a 80%,
+    #1e5c1e 90%,
+    #1a4a1a 100%
+  );
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Garis tengah */
+.field::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Lingkaran tengah */
+.field::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.field-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.field-gk {
+  flex: 0 0 80px;
+}
+
+/* ── SLOT DI FIELD ───────────────────────────────────────── */
+.field-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  width: 130px;
+  flex-shrink: 0;
+}
+
+/* ── CARD DI FIELD ───────────────────────────────────────── */
+.field-card {
+  width: 120px !important;
+  min-height: 165px !important;
+  padding: 0.5rem 0.3rem !important;
+  border-radius: 10px !important;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  border-width: 2px !important;
+}
+
+.field-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+/* Ukuran card di field - lebih proporsional */
+.field-card .card-rating {
+  font-size: 1rem !important;
+  top: 0.35rem !important;
+  left: 0.4rem !important;
+}
+
+.field-card .card-position {
+  font-size: 0.5rem !important;
+  top: 0.35rem !important;
+  right: 0.4rem !important;
+}
+
+/* Celestial: rating, posisi, dan level pakai positioning absolute custom
+   (lihat .card-celestial di card.css) yang dihitung untuk card 160px.
+   Card di field cuma 120px, jadi perlu di-skala ulang di sini supaya
+   tidak saling tumpang tindih. */
+.field-card.card-celestial .card-rating {
+  top: 0.35rem !important;
+  left: 0.4rem !important;
+  right: auto !important;
+  font-size: 1rem !important;
+}
+
+.field-card.card-celestial .card-position {
+  top: 1.4rem !important;
+  left: 0.4rem !important;
+  right: auto !important;
+  font-size: 0.5rem !important;
+}
+
+.field-card.card-celestial .card-level {
+  top: 2.05rem !important;
+  left: 0.4rem !important;
+  font-size: 0.4rem !important;
+}
+
+.field-card .card-image,
+.field-card .card-image-placeholder {
+  width: 48px !important;
+  height: 48px !important;
+  margin-top: 0.3rem !important;
+  font-size: 1.2rem !important;
+}
+
+/* Kecualikan Celestial: gambarnya full-bleed (background penuh card),
+   bukan thumbnail kecil seperti tier lain. Tanpa override ini, gambar
+   celestial di field/bench akan dipaksa jadi 48x48px dan animasi/posisinya rusak. */
+.field-card.card-celestial .card-image {
+  width: 106% !important;
+  height: 106% !important;
+  margin-top: 0 !important;
+  top: -3% !important;
+  left: -3% !important;
+}
+
+.field-card .card-name {
+  font-size: 0.55rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  padding: 0 0.1rem;
+}
+
+.field-card .card-country {
+  font-size: 0.45rem !important;
+  opacity: 0.7;
+}
+
+.field-card .card-stats {
+  gap: 0.4rem !important;
+  margin-top: 0.05rem !important;
+}
+
+.field-card .card-stat-val {
+  font-size: 0.6rem !important;
+}
+
+.field-card .card-stat-lbl {
+  font-size: 0.4rem !important;
+}
+
+.field-card .card-tier-badge {
+  font-size: 0.4rem !important;
+  padding: 0.05rem 0.35rem !important;
+  margin-top: 0.05rem !important;
+}
+
+.field-card .card-level {
+  font-size: 0.45rem !important;
+  margin-top: 0.05rem !important;
+}
+
+/* Tombol hapus di card */
+.field-card .card-remove-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.field-card:hover .card-remove-btn {
+  opacity: 1;
+}
+
+.field-card .card-remove-btn:hover {
+  transform: scale(1.2);
+  background: #dc2626;
+}
+
+/* ── SLOT KOSONG ──────────────────────────────────────────── */
+.field-slot-empty-card {
+  width: 120px;
+  height: 165px;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  background: rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.field-slot-empty-card:hover {
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, 0.1);
+  transform: scale(1.03);
+}
+
+.field-slot-empty-card .empty-slot-icon {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.field-slot-empty-card .empty-slot-pos {
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── POSITION SELECTOR ────────────────────────────────────── */
+.field-slot .pos-select {
+  font-size: 0.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.05rem 0.25rem;
+  cursor: pointer;
+  max-width: 55px;
+  text-align: center;
+  margin-top: 0.05rem;
+}
+
+.field-slot .pos-select:hover {
+  border-color: var(--accent);
+}
+
+.field-slot .pos-select option {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+/* ── BENCH GRID ──────────────────────────────────────────── */
+.bench-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.bench-slot-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── MINI CARD UNTUK BENCH ───────────────────────────────── */
+.bench-mini-card {
+  width: 100%;
+  max-width: 100px;
+  min-height: 85px;
+  border-radius: 8px;
+  padding: 0.25rem 0.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.bench-mini-card:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 5;
+}
+
+.bench-mini-card .bench-mini-rating {
+  font-size: 0.8rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.bench-mini-card .bench-mini-name {
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: #fff;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 0 0.1rem;
+}
+
+.bench-mini-card .bench-mini-tier {
+  font-size: 0.38rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.05rem 0.3rem;
+  border-radius: 99px;
+  margin-top: 0.05rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Tombol hapus di bench card */
+.bench-mini-card .bench-mini-remove {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: #fff;
+  font-size: 0.45rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.bench-mini-card:hover .bench-mini-remove {
+  opacity: 1;
+}
+
+.bench-mini-card .bench-mini-remove:hover {
+  transform: scale(1.2);
+  background: #dc2626;
+}
+
+/* ── BENCH EMPTY SLOT ────────────────────────────────────── */
+.bench-empty-card {
+  width: 100%;
+  max-width: 100px;
+  min-height: 85px;
+  border: 2px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05rem;
+  background: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bench-empty-card:hover {
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, 0.06);
+  transform: scale(1.03);
+}
+
+.bench-empty-card .bench-empty-icon {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.bench-empty-card .bench-empty-num {
+  font-size: 0.42rem;
+  color: rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+}
+
+/* ── AVAILABLE PLAYER ITEM ───────────────────────────────── */
+.avail-player-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.75rem;
+}
+
+.avail-player-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+}
+
+.avail-player-item.in-lineup {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.avail-tier-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.avail-player-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.avail-player-meta {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+}
+
+.avail-player-rating {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .field-slot {
+    width: 100px;
+  }
+
+  .field-card {
+    width: 95px !important;
+    min-height: 135px !important;
+    padding: 0.35rem 0.2rem !important;
+  }
+
+  .field-card .card-rating {
+    font-size: 0.8rem !important;
+  }
+
+  .field-card .card-position {
+    font-size: 0.4rem !important;
+  }
+
+  .field-card .card-image,
+  .field-card .card-image-placeholder {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .field-card.card-celestial .card-image {
+    width: 106% !important;
+    height: 106% !important;
+    margin-top: 0 !important;
+    top: -3% !important;
+    left: -3% !important;
+  }
+
+  .field-card .card-name {
+    font-size: 0.45rem !important;
+  }
+
+  .field-card .card-stats {
+    gap: 0.3rem !important;
+  }
+
+  .field-card .card-stat-val {
+    font-size: 0.5rem !important;
+  }
+
+  .field-card .card-stat-lbl {
+    font-size: 0.35rem !important;
+  }
+
+  .field-card .card-tier-badge {
+    font-size: 0.35rem !important;
+    padding: 0.05rem 0.25rem !important;
+  }
+
+  .field-card .card-level {
+    font-size: 0.38rem !important;
+  }
+
+  .field-slot-empty-card {
+    width: 95px;
+    height: 135px;
+  }
+
+  .field-slot .pos-select {
+    font-size: 0.4rem;
+    max-width: 45px;
+  }
+
+  .bench-grid {
+    gap: 0.3rem;
+  }
+
+  .bench-mini-card {
+    max-width: 80px;
+    min-height: 70px;
+    padding: 0.2rem 0.1rem;
+  }
+
+  .bench-mini-card .bench-mini-rating {
+    font-size: 0.65rem;
+  }
+
+  .bench-mini-card .bench-mini-name {
+    font-size: 0.4rem;
+  }
+
+  .bench-mini-card .bench-mini-tier {
+    font-size: 0.32rem;
+    padding: 0.05rem 0.2rem;
+  }
+
+  .bench-empty-card {
+    max-width: 80px;
+    min-height: 70px;
+  }
+
+  .bench-empty-card .bench-empty-icon {
+    font-size: 0.8rem;
+  }
+
+  .bench-empty-card .bench-empty-num {
+    font-size: 0.35rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .field-slot {
+    width: 72px;
+  }
+
+  .field-card {
+    width: 68px !important;
+    min-height: 100px !important;
+    padding: 0.2rem 0.1rem !important;
+    border-radius: 6px !important;
+  }
+
+  .field-card .card-rating {
+    font-size: 0.6rem !important;
+    top: 0.2rem !important;
+    left: 0.25rem !important;
+  }
+
+  .field-card .card-position {
+    font-size: 0.32rem !important;
+    top: 0.2rem !important;
+    right: 0.25rem !important;
+  }
+
+  .field-card .card-image,
+  .field-card .card-image-placeholder {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.7rem !important;
+    margin-top: 0.2rem !important;
+  }
+
+  .field-card.card-celestial .card-image {
+    width: 106% !important;
+    height: 106% !important;
+    margin-top: 0 !important;
+    top: -3% !important;
+    left: -3% !important;
+  }
+
+  .field-card .card-name {
+    font-size: 0.38rem !important;
+  }
+
+  .field-card .card-country {
+    font-size: 0.3rem !important;
+  }
+
+  .field-card .card-stats {
+    gap: 0.2rem !important;
+  }
+
+  .field-card .card-stat-val {
+    font-size: 0.4rem !important;
+  }
+
+  .field-card .card-stat-lbl {
+    font-size: 0.3rem !important;
+  }
+
+  .field-card .card-tier-badge {
+    font-size: 0.3rem !important;
+    padding: 0.03rem 0.2rem !important;
+  }
+
+  .field-card .card-level {
+    font-size: 0.3rem !important;
+  }
+
+  .field-card .card-remove-btn {
+    width: 14px;
+    height: 14px;
+    font-size: 0.4rem;
+    top: -4px;
+    right: -4px;
+  }
+
+  .field-slot-empty-card {
+    width: 68px;
+    height: 100px;
+    border-radius: 6px;
+  }
+
+  .field-slot-empty-card .empty-slot-icon {
+    font-size: 1rem;
+  }
+
+  .field-slot-empty-card .empty-slot-pos {
+    font-size: 0.4rem;
+  }
+
+  .field-slot .pos-select {
+    font-size: 0.35rem;
+    max-width: 35px;
+    padding: 0.03rem 0.15rem;
+  }
+
+  .bench-grid {
+    gap: 0.2rem;
+  }
+
+  .bench-mini-card {
+    max-width: 60px;
+    min-height: 55px;
+    border-radius: 4px;
+    padding: 0.15rem 0.05rem;
+  }
+
+  .bench-mini-card .bench-mini-rating {
+    font-size: 0.5rem;
+  }
+
+  .bench-mini-card .bench-mini-name {
+    font-size: 0.32rem;
+  }
+
+  .bench-mini-card .bench-mini-tier {
+    font-size: 0.28rem;
+    padding: 0.03rem 0.15rem;
+  }
+
+  .bench-mini-card .bench-mini-remove {
+    width: 12px;
+    height: 12px;
+    font-size: 0.35rem;
+    top: -3px;
+    right: -3px;
+  }
+
+  .bench-empty-card {
+    max-width: 60px;
+    min-height: 55px;
+    border-radius: 4px;
+  }
+
+  .bench-empty-card .bench-empty-icon {
+    font-size: 0.6rem;
+  }
+
+  .bench-empty-card .bench-empty-num {
+    font-size: 0.3rem;
+  }
+
+  .avail-player-item {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.35rem;
+    gap: 0.3rem;
+  }
+
+  .avail-player-name {
+    font-size: 0.65rem;
+  }
+
+  .avail-player-meta {
+    font-size: 0.5rem;
+  }
+
+  .avail-player-rating {
+    font-size: 0.6rem;
+  }
+}

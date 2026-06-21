@@ -1,0 +1,669 @@
+/* ============================================================
+   PLAYER CARD STYLES PER TIER
+   ============================================================ */
+
+.player-card {
+  width: 160px;
+  min-height: 220px;
+  border-radius: 14px;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.player-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.player-card .card-rating {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.player-card .card-position {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.player-card .card-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin-top: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.player-card .card-image-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-top: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-card .card-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-card .card-country {
+  font-size: 0.65rem;
+  opacity: 0.75;
+}
+
+.player-card .card-stats {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.player-card .card-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.player-card .card-stat-val {
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.player-card .card-stat-lbl {
+  font-size: 0.6rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.player-card .card-tier-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.25);
+  margin-top: auto;
+}
+
+.player-card .card-level {
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+/* ── TIER: AMATEUR ───────────────────────────────────────── */
+.card-amateur {
+  background: linear-gradient(145deg, #616161, #9e9e9e);
+  color: #fff;
+  border-color: #bdbdbd;
+}
+
+/* ── TIER: TRAINED ───────────────────────────────────────── */
+.card-trained {
+  background: linear-gradient(145deg, #1565c0, #64b5f6);
+  color: #fff;
+  border-color: #90caf9;
+}
+
+/* ── TIER: TALENTED ──────────────────────────────────────── */
+.card-talented {
+  background: linear-gradient(145deg, #0d47a1, #1976d2);
+  color: #fff;
+  border-color: #42a5f5;
+}
+
+/* ── TIER: SEMI-PRO ──────────────────────────────────────── */
+.card-semi-pro {
+  background: linear-gradient(145deg, #1b5e20, #388e3c);
+  color: #fff;
+  border-color: #66bb6a;
+}
+
+/* ── TIER: PRO ───────────────────────────────────────────── */
+.card-pro {
+  background: linear-gradient(145deg, #2e7d32, #66bb6a);
+  color: #fff;
+  border-color: #a5d6a7;
+}
+
+/* ── TIER: EXPERT ────────────────────────────────────────── */
+.card-expert {
+  background: linear-gradient(145deg, #e65100, #f57c00);
+  color: #fff;
+  border-color: #ffb74d;
+  box-shadow: 0 0 16px rgba(245, 124, 0, 0.4);
+}
+
+/* ── TIER: LEGENDARY ─────────────────────────────────────── */
+.card-legendary {
+  background: linear-gradient(145deg, #4a148c, #7b1fa2);
+  color: #fff;
+  border-color: #ce93d8;
+  box-shadow: 0 0 20px rgba(123, 31, 162, 0.5);
+}
+
+/* ── TIER: GOAT ──────────────────────────────────────────── */
+.card-goat {
+  background: linear-gradient(145deg, #e65100, #6a1b9a, #f9a825);
+  background-size: 200% 200%;
+  animation: goatGradient 4s ease infinite;
+  color: #fff;
+  border-color: #ffd700;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+.card-goat::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: linear-gradient(45deg, #ffd700, #f57c00, #6a1b9a, #ffd700);
+  background-size: 300% 300%;
+  animation: goatBorder 3s linear infinite;
+  z-index: -1;
+}
+
+/* ── TIER: ASEAN LEGEND ───────────────────────────────────── */
+.card-asean {
+  background: linear-gradient(145deg, #ffd700, #ff6b35, #008000);
+  background-size: 200% 200%;
+  animation: aseanGradient 5s ease infinite;
+  color: #fff;
+  border-color: #ffd700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efek shimmer di card ASEAN */
+.card-asean::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 215, 0, 0.25) 0%,
+    transparent 60%
+  );
+  animation: aseanShimmer 6s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Border animasi untuk ASEAN */
+.card-asean::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 16px;
+  background: linear-gradient(45deg, #ffd700, #ff6b35, #008000, #ffd700);
+  background-size: 300% 300%;
+  animation: aseanBorder 4s linear infinite;
+  z-index: -1;
+}
+
+/* Wrapper untuk konten card (biar di atas efek) */
+.card-asean .card-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Rating warna emas spesial */
+.card-asean .card-rating {
+  color: #ffd700;
+  text-shadow:
+    0 0 15px rgba(255, 215, 0, 0.9),
+    0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+/* Badge ASEAN Legend */
+.card-asean .card-tier-badge {
+  background: linear-gradient(90deg, #ffd700, #ff6b35);
+  color: #1a1a1a;
+  font-weight: 800;
+  border: 1px solid #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  padding: 0.15rem 0.8rem;
+}
+
+/* Efek hover untuk ASEAN */
+.card-asean:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 12px 40px rgba(255, 215, 0, 0.7),
+    0 0 60px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Logo ASEAN di card (opsional) */
+.card-asean .asean-star {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.8rem;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  z-index: 3;
+  font-weight: 900;
+}
+
+/* ============================================================
+   ANIMASI UNTUK ASEAN LEGEND
+   ============================================================ */
+
+@keyframes aseanGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  33% {
+    background-position: 100% 50%;
+  }
+  66% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes aseanShimmer {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.2);
+  }
+}
+
+@keyframes aseanBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 300% 300%;
+  }
+}
+
+@keyframes goatGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes goatBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 300% 300%;
+  }
+}
+
+.card-goat .card-rating {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* ── TIER: CELESTIAL ──────────────────────────────────────── */
+/* ============================================================
+   CELESTIAL STRIKERS — SIMPLE / FLAT DESIGN
+   ============================================================ */
+
+.card-celestial {
+  position: relative;
+  overflow: hidden;
+  width: 160px;
+  min-height: 220px;
+  border-radius: 14px;
+  padding: 0 !important;
+  background: linear-gradient(160deg, #3a4a63 0%, #1c2433 55%, #05070a 100%);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  animation: celestialGlowPulse 4s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+
+.card-celestial:hover {
+  transform: translateY(-4px);
+}
+
+/* ── GAMBAR FULL TANPA CROP, OMBANG-AMBING PELAN ────────── */
+/* overflow:hidden di parent memotong rapi setiap kelebihan gerakan,
+   jadi gambar tidak pernah bocor keluar tepian card. */
+.card-celestial .card-image {
+  position: absolute !important;
+  top: -3% !important;
+  left: -3% !important;
+  width: 106% !important;
+  height: 106% !important;
+  right: auto !important;
+  bottom: auto !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1 !important;
+  transform-origin: center bottom;
+  animation: celestialImageSway 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.card-celestial .card-image-placeholder {
+  display: none !important;
+}
+
+/* ── OVERLAY GRADIENT (biar teks terbaca) + KILAU YANG LEWAT ───
+   Digabung di satu ::before: layer gradient gelap (statis) DITAMBAH
+   sapuan cahaya diagonal yang bergerak, lewat background-position. */
+.card-celestial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      100deg,
+      transparent 0%,
+      transparent 40%,
+      rgba(255, 255, 255, 0.28) 50%,
+      transparent 60%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 45%,
+      rgba(0, 0, 0, 0.55) 68%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
+  background-size:
+    260% 260%,
+    100% 100%;
+  background-position:
+    -120% -120%,
+    0 0;
+  background-repeat: no-repeat;
+  animation: celestialShineSweep 4.5s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── RATING (Kiri Atas) ──────────────────────────────────── */
+.card-celestial .card-rating {
+  position: absolute !important;
+  top: 0.7rem !important;
+  left: 0.7rem !important;
+  font-size: 1.7rem !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  z-index: 10 !important;
+  line-height: 1 !important;
+}
+
+/* ── POSISI (di bawah rating) ────────────────────────────── */
+.card-celestial .card-position {
+  position: absolute !important;
+  top: 2.55rem !important;
+  left: 0.7rem !important;
+  right: auto !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  z-index: 10 !important;
+}
+
+/* ── LEVEL (di bawah posisi) ─────────────────────────────── */
+.card-celestial .card-level {
+  position: absolute !important;
+  top: 3.6rem !important;
+  left: 0.7rem !important;
+  bottom: auto !important;
+  right: auto !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+  z-index: 10 !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* ── TIER BADGE (Kanan Atas, pill oranye→hijau) ─────────── */
+.card-celestial .card-tier-badge {
+  position: absolute !important;
+  top: 0.7rem !important;
+  right: 0.7rem !important;
+  font-size: 0.6rem !important;
+  font-weight: 700 !important;
+  text-transform: capitalize !important;
+  letter-spacing: 0.02em !important;
+  color: #fff !important;
+  background: linear-gradient(90deg, #e8740c, #8bc11e) !important;
+  padding: 0.22rem 0.65rem !important;
+  border-radius: 99px !important;
+  border: none !important;
+  z-index: 10 !important;
+  white-space: nowrap !important;
+}
+
+/* ── NAMA (di atas stats, flow normal) ───────────────────── */
+.card-celestial .card-name {
+  position: relative !important;
+  margin-top: auto !important;
+  padding: 0 0.6rem !important;
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.01em !important;
+  color: #fff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* ── STATS (OFF/DEF/TWK) ────────────────────────────────── */
+.card-celestial .card-stats {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1.1rem !important;
+  width: 100% !important;
+  margin-top: 0.3rem !important;
+  z-index: 10 !important;
+}
+
+.card-celestial .card-stat {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.05rem !important;
+}
+
+.card-celestial .card-stat-val {
+  font-size: 0.95rem !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  line-height: 1.1 !important;
+}
+
+.card-celestial .card-stat-lbl {
+  font-size: 0.6rem !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ── NEGARA (paling bawah) ───────────────────────────────── */
+.card-celestial .card-country {
+  position: relative !important;
+  width: 100% !important;
+  text-align: center !important;
+  font-size: 0.7rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+  z-index: 10 !important;
+  margin-top: 0.25rem !important;
+  padding-bottom: 0.9rem !important;
+}
+
+/* ── ANIMASI CELESTIAL ───────────────────────────────────── */
+
+/* Nyala (glow) di pinggiran luar card, berdenyut pelan & berganti warna
+   lewat box-shadow — tidak butuh elemen tambahan, tidak pernah menutupi
+   gambar di dalam karena box-shadow selalu duduk di LUAR kotak elemen. */
+@keyframes celestialGlowPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px 2px rgba(232, 116, 12, 0.45),
+      0 0 22px 6px rgba(232, 116, 12, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 16px 4px rgba(139, 193, 30, 0.55),
+      0 0 32px 10px rgba(139, 193, 30, 0.3);
+  }
+}
+
+/* Gambar pemain ombang-ambing sangat pelan, tidak mengganggu teks di atasnya */
+@keyframes celestialImageSway {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateX(-0.6%) rotate(-0.4deg) scale(1.01);
+  }
+  50% {
+    transform: translateX(0) rotate(0deg) scale(1.015);
+  }
+  75% {
+    transform: translateX(0.6%) rotate(0.4deg) scale(1.01);
+  }
+}
+
+/* Kilau tipis yang menyapu diagonal melewati card (lewat background-position
+   layer pertama saja; layer kedua/gradient gelap tetap diam di 0 0) */
+@keyframes celestialShineSweep {
+  0%,
+  15% {
+    background-position:
+      -120% -120%,
+      0 0;
+  }
+  60% {
+    background-position:
+      120% 120%,
+      0 0;
+  }
+  100% {
+    background-position:
+      120% 120%,
+      0 0;
+  }
+}
+
+/* ── CARD GRID CONTAINER ─────────────────────────────────── */
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ── CARD LIST (horizontal di dashboard) ─────────────────── */
+.card-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+  transition: background var(--transition);
+}
+
+.card-list-item:hover {
+  background: var(--bg-card-hover);
+}
+
+.card-list-tier-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── TIER DOT UNTUK ASEAN ───────────────────────────────── */
+.card-list-tier-dot.asean {
+  background: linear-gradient(135deg, #ffd700, #ff6b35, #008000);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  width: 12px;
+  height: 12px;
+}
+
+.card-list-name {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.card-list-stats {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
