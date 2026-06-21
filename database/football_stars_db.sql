@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jun 21, 2026 at 07:29 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Host: 127.0.0.1
+-- Generation Time: Jun 21, 2026 at 10:27 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,16 +74,16 @@ DELIMITER ;
 --
 
 CREATE TABLE `daily_quest_definitions` (
-  `id` int NOT NULL,
-  `quest_key` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quest_type` enum('match','win','spin','upgrade_player','add_player','login') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `target` int NOT NULL DEFAULT '1',
-  `reward_euro` int NOT NULL DEFAULT '0',
-  `reward_gems` int NOT NULL DEFAULT '0',
-  `reward_tr_token` int NOT NULL DEFAULT '0',
-  `reward_wt_token` int NOT NULL DEFAULT '0'
+  `id` int(11) NOT NULL,
+  `quest_key` varchar(60) NOT NULL,
+  `title` varchar(120) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `quest_type` enum('match','win','spin','upgrade_player','add_player','login') NOT NULL,
+  `target` int(11) NOT NULL DEFAULT 1,
+  `reward_euro` int(11) NOT NULL DEFAULT 0,
+  `reward_gems` int(11) NOT NULL DEFAULT 0,
+  `reward_tr_token` int(11) NOT NULL DEFAULT 0,
+  `reward_wt_token` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -106,21 +106,21 @@ INSERT INTO `daily_quest_definitions` (`id`, `quest_key`, `title`, `description`
 --
 
 CREATE TABLE `football_players` (
-  `id` int UNSIGNED NOT NULL,
-  `player_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `position` enum('GK','CB','LB','RB','CDM','CM','CAM','LW','RW','ST') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rating` tinyint UNSIGNED NOT NULL,
-  `offence` tinyint UNSIGNED NOT NULL,
-  `defence` tinyint UNSIGNED NOT NULL,
-  `teamwork` tinyint UNSIGNED NOT NULL,
-  `tier_id` int UNSIGNED NOT NULL,
-  `card_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_custom` tinyint(1) NOT NULL DEFAULT '0',
-  `is_exclusive` tinyint(1) NOT NULL DEFAULT '0',
-  `owner_id` int UNSIGNED DEFAULT NULL,
-  `current_level` tinyint UNSIGNED NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `player_name` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `position` enum('GK','CB','LB','RB','CDM','CM','CAM','LW','RW','ST') NOT NULL,
+  `rating` tinyint(3) UNSIGNED NOT NULL,
+  `offence` tinyint(3) UNSIGNED NOT NULL,
+  `defence` tinyint(3) UNSIGNED NOT NULL,
+  `teamwork` tinyint(3) UNSIGNED NOT NULL,
+  `tier_id` int(10) UNSIGNED NOT NULL,
+  `card_image` varchar(255) DEFAULT NULL,
+  `is_custom` tinyint(1) NOT NULL DEFAULT 0,
+  `is_exclusive` tinyint(1) NOT NULL DEFAULT 0,
+  `owner_id` int(10) UNSIGNED DEFAULT NULL,
+  `current_level` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -128,23 +128,23 @@ CREATE TABLE `football_players` (
 --
 
 INSERT INTO `football_players` (`id`, `player_name`, `country`, `position`, `rating`, `offence`, `defence`, `teamwork`, `tier_id`, `card_image`, `is_custom`, `is_exclusive`, `owner_id`, `current_level`, `created_at`) VALUES
-(1, 'Robert Lewandowski', 'Poland', 'ST', 80, 78, 78, 78, 6, NULL, 0, 1, 2, 1, '2026-06-16 11:58:25'),
-(2, 'Kylian Mbappe', 'France', 'ST', 88, 90, 52, 78, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(3, 'Mohamed Salah', 'Egypt', 'RW', 87, 87, 48, 74, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(4, 'Erling Haaland', 'Norway', 'ST', 90, 87, 87, 87, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(5, 'Neymar Jr', 'Brazil', 'LW', 86, 86, 55, 80, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(6, 'Luka Modric', 'Croatia', 'CM', 83, 75, 70, 88, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(7, 'Kevin De Bruyne', 'Belgium', 'CAM', 85, 82, 64, 89, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(8, 'Virgil van Dijk', 'Netherlands', 'CB', 85, 58, 93, 81, 6, NULL, 0, 1, 1, 2, '2026-06-16 11:58:25'),
-(9, 'Toni Kroos', 'Germany', 'CM', 84, 78, 68, 90, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(10, 'Zlatan Ibrahimovic', 'Sweden', 'ST', 83, 85, 52, 74, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(11, 'Ronaldinho', 'Brazil', 'CAM', 95, 94, 60, 91, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(12, 'Zinedine Zidane', 'France', 'CAM', 96, 90, 72, 93, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(13, 'Thierry Henry', 'France', 'ST', 94, 93, 58, 88, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
-(14, 'Ronaldo Nazario', 'Brazil', 'ST', 135, 173, 131, 163, 7, NULL, 0, 1, 1, 20, '2026-06-16 11:58:25'),
-(15, 'Paolo Maldini', 'Italy', 'CB', 134, 134, 173, 166, 7, NULL, 0, 1, 1, 20, '2026-06-16 11:58:25'),
-(16, 'Lionel Messi', 'Argentina', 'CAM', 177, 194, 194, 194, 8, NULL, 0, 1, 1, 20, '2026-06-16 11:58:25'),
-(17, 'Cristiano Ronaldo', 'Portugal', 'ST', 177, 194, 194, 194, 8, NULL, 0, 1, 2, 20, '2026-06-16 11:58:25'),
+(1, 'Robert Lewandosky', 'Poland', 'ST', 80, 78, 78, 78, 6, NULL, 0, 1, 2, 1, '2026-06-16 11:58:25'),
+(2, 'Kylian Mboppi', 'France', 'ST', 88, 90, 52, 78, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(3, 'Mohamed Salahudin', 'Egypt', 'RW', 87, 87, 48, 74, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(4, 'Erling Haalando', 'Norway', 'ST', 90, 87, 87, 87, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(5, 'Neymar Da Silva', 'Brazil', 'LW', 86, 86, 55, 80, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(6, 'Luka Modricic', 'Croatia', 'CM', 83, 75, 70, 88, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(7, 'Kevin De Bruyene', 'Belgium', 'CAM', 85, 82, 64, 89, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(8, 'Virgil Van Dijko', 'Netherlands', 'CB', 85, 58, 93, 81, 6, NULL, 0, 1, 1, 2, '2026-06-16 11:58:25'),
+(9, 'Toni Kroosovic', 'Germany', 'CM', 84, 78, 68, 90, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(10, 'Ibrahim Zlatanovic', 'Sweden', 'ST', 83, 85, 52, 74, 6, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(11, 'Ronadinho Gaucho', 'Brazil', 'CAM', 95, 94, 60, 91, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(12, 'Zizou Zidanez', 'France', 'CAM', 96, 90, 72, 93, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(13, 'Tierry Henrison', 'France', 'ST', 94, 93, 58, 88, 7, NULL, 0, 1, 1, 1, '2026-06-16 11:58:25'),
+(14, 'Ronaldo Fenomeno', 'Brazil', 'ST', 135, 173, 131, 163, 7, NULL, 0, 1, 1, 20, '2026-06-16 11:58:25'),
+(15, 'Paolo Maldino', 'Italy', 'CB', 134, 134, 173, 166, 7, NULL, 0, 1, 1, 20, '2026-06-16 11:58:25'),
+(16, 'Lionard Meowssi', 'Argentina', 'CAM', 177, 194, 194, 194, 8, NULL, 0, 1, 1, 20, '2026-06-16 11:58:25'),
+(17, 'Christiano Ronalldez', 'Portugal', 'ST', 177, 194, 194, 194, 8, NULL, 0, 1, 2, 20, '2026-06-16 11:58:25'),
 (18, 'Khvicha Kvaratskhelia', 'Georgia', 'LW', 87, 89, 44, 79, 6, NULL, 0, 1, 1, 1, '2026-06-16 17:32:05'),
 (19, 'Budi Santoso', 'Indonesia', 'CB', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-17 03:03:06'),
 (20, 'Rizky Pratama', 'Indonesia', 'GK', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-17 03:03:06'),
@@ -172,207 +172,207 @@ INSERT INTO `football_players` (`id`, `player_name`, `country`, `position`, `rat
 (42, 'Dimas Setiawan', 'Indonesia', 'LB', 45, 35, 35, 35, 1, NULL, 0, 0, 1, 1, '2026-06-18 02:28:04'),
 (43, 'Mateus Costa', 'Brazil', 'ST', 48, 38, 38, 38, 1, NULL, 0, 0, NULL, 4, '2026-06-18 02:28:04'),
 (44, 'Andi Saputra', 'Indonesia', 'CB', 45, 35, 35, 35, 1, NULL, 0, 0, 1, 1, '2026-06-18 02:28:04'),
-(45, 'Alisson Becker', 'Brazil', 'GK', 86, 40, 89, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(45, 'Alisson Beckerz', 'Brazil', 'GK', 86, 40, 89, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
 (46, 'Ederson Santana', 'Brazil', 'GK', 85, 42, 87, 76, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(47, 'Thibaut Courtois', 'Belgium', 'GK', 87, 38, 90, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(48, 'Manuel Neuer', 'Germany', 'GK', 84, 45, 86, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(49, 'Jan Oblak', 'Slovenia', 'GK', 83, 35, 88, 72, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(47, 'Thibaut Courtoisi', 'Belgium', 'GK', 87, 38, 90, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(48, 'Manuel Neuerz', 'Germany', 'GK', 84, 45, 86, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(49, 'Jan Oblakovic', 'Slovenia', 'GK', 83, 35, 88, 72, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
 (50, 'Gianluigi Donnarumma', 'Italy', 'GK', 85, 40, 87, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(51, 'David De Gea', 'Spain', 'GK', 82, 38, 85, 73, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(52, 'Marc-Andre ter Stegen', 'Germany', 'GK', 84, 39, 86, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(53, 'Keylor Navas', 'Costa Rica', 'GK', 81, 36, 84, 71, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(54, 'Emiliano Martinez', 'Argentina', 'GK', 83, 37, 85, 73, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(55, 'Ruben Dias', 'Portugal', 'CB', 86, 55, 90, 80, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(56, 'Marquinhos', 'Brazil', 'CB', 85, 54, 89, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(57, 'Alessandro Bastoni', 'Italy', 'CB', 84, 52, 88, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(58, 'William Saliba', 'France', 'CB', 85, 53, 89, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(59, 'Josko Gvardiol', 'Croatia', 'CB', 84, 56, 87, 78, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(60, 'David Alaba', 'Austria', 'CB', 83, 58, 86, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(61, 'Mats Hummels', 'Germany', 'CB', 82, 50, 87, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(62, 'Raphael Varane', 'France', 'CB', 84, 51, 88, 76, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(63, 'Kim Min-jae', 'South Korea', 'CB', 83, 49, 87, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(64, 'Antonio Rudiger', 'Germany', 'CB', 84, 53, 88, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(65, 'Jules Kounde', 'France', 'CB', 83, 54, 86, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(66, 'Theo Hernandez', 'France', 'LB', 85, 72, 78, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(67, 'Alphonso Davies', 'Canada', 'LB', 84, 74, 76, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(68, 'Ferland Mendy', 'France', 'LB', 83, 68, 79, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(69, 'Andrew Robertson', 'Scotland', 'LB', 82, 70, 77, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(70, 'Nuno Mendes', 'Portugal', 'LB', 83, 73, 75, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(71, 'Achraf Hakimi', 'Morocco', 'RB', 85, 76, 77, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(72, 'Kyle Walker', 'England', 'RB', 83, 68, 80, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(73, 'Dani Carvajal', 'Spain', 'RB', 84, 70, 79, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(74, 'Reece James', 'England', 'RB', 82, 72, 77, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(75, 'Trent Alexander-Arnold', 'England', 'RB', 86, 78, 74, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(76, 'Casemiro', 'Brazil', 'CDM', 84, 68, 85, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(77, 'Joshua Kimmich', 'Germany', 'CDM', 86, 72, 82, 88, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(78, 'Rodri', 'Spain', 'CDM', 87, 70, 84, 85, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(79, 'Declan Rice', 'England', 'CDM', 80, 78, 78, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(80, 'Aurelien Tchouameni', 'France', 'CDM', 84, 66, 82, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(81, 'N\'Golo Kante', 'France', 'CDM', 83, 64, 84, 84, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(82, 'Sergio Busquets', 'Spain', 'CDM', 82, 62, 81, 86, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(83, 'Frenkie de Jong', 'Netherlands', 'CM', 86, 76, 74, 85, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(84, 'Pedri', 'Spain', 'CM', 85, 78, 72, 86, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(85, 'Gavi', 'Spain', 'CM', 84, 79, 70, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(86, 'Jude Bellingham', 'England', 'CM', 80, 78, 78, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(87, 'Eduardo Camavinga', 'France', 'CM', 84, 77, 75, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(88, 'Bruno Fernandes', 'Portugal', 'CAM', 87, 84, 66, 85, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(89, 'Bernardo Silva', 'Portugal', 'CAM', 86, 82, 68, 84, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(90, 'Jack Grealish', 'England', 'CAM', 83, 80, 64, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(91, 'James Maddison', 'England', 'CAM', 84, 81, 62, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(92, 'Florian Wirtz', 'Germany', 'CAM', 85, 83, 60, 84, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(93, 'Jamal Musiala', 'Germany', 'CAM', 86, 84, 62, 85, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(94, 'Martin Odegaard', 'Norway', 'CAM', 85, 82, 63, 86, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(95, 'Phil Foden', 'England', 'LW', 87, 87, 58, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(96, 'Rafael Leao', 'Portugal', 'LW', 85, 86, 54, 80, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(97, 'Dusan Vlahovic', 'Serbia', 'ST', 84, 85, 52, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(98, 'Lautaro Martinez', 'Argentina', 'ST', 87, 88, 50, 80, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(99, 'Alexander Isak', 'Sweden', 'ST', 86, 87, 51, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(100, 'Rasmus Hojlund', 'Denmark', 'ST', 83, 84, 48, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(101, 'Alvaro Morata', 'Spain', 'ST', 82, 82, 50, 77, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(102, 'Joshua Zirkzee', 'Netherlands', 'ST', 81, 80, 47, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(103, 'Harry Kane', 'England', 'ST', 89, 90, 52, 84, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(104, 'Romelu Lukaku', 'Belgium', 'ST', 83, 85, 46, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(105, 'Victor Osimhen', 'Nigeria', 'ST', 86, 88, 48, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(106, 'Luis Diaz', 'Colombia', 'LW', 85, 86, 54, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(107, 'Grealish', 'England', 'LW', 83, 82, 56, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(108, 'Vinicius Junior', 'Brazil', 'LW', 90, 87, 87, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(109, 'Rodrygo', 'Brazil', 'RW', 86, 87, 52, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(110, 'Bukayo Saka', 'England', 'RW', 87, 88, 54, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(111, 'Marcus Rashford', 'England', 'LW', 84, 85, 50, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(112, 'Eder Militao', 'Brazil', 'CB', 85, 52, 88, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(113, 'Diego Carlos', 'Brazil', 'CB', 81, 48, 84, 74, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(114, 'Fikayo Tomori', 'England', 'CB', 82, 50, 85, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(115, 'Eric Dier', 'England', 'CB', 80, 47, 83, 76, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(116, 'Gleison Bremer', 'Brazil', 'CB', 83, 51, 86, 76, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(117, 'Nathan Ake', 'Netherlands', 'CB', 83, 52, 85, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(118, 'Jurrien Timber', 'Netherlands', 'CB', 82, 50, 84, 77, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(119, 'Christopher Nkunku', 'France', 'CAM', 86, 84, 62, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(120, 'Kingsley Coman', 'France', 'LW', 84, 84, 52, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(121, 'Ousmane Dembele', 'France', 'RW', 83, 83, 50, 78, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(122, 'Joao Felix', 'Portugal', 'CAM', 85, 82, 60, 81, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(123, 'Matheus Nunes', 'Portugal', 'CM', 82, 76, 70, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(124, 'Joao Palhinha', 'Portugal', 'CDM', 83, 64, 82, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(125, 'Goncalo Ramos', 'Portugal', 'ST', 84, 85, 48, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(126, 'Sofyan Amrabat', 'Morocco', 'CDM', 82, 62, 81, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(127, 'Hakim Ziyech', 'Morocco', 'RW', 81, 80, 50, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(128, 'Ashraf Hakimi', 'Morocco', 'RB', 85, 76, 77, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(129, 'Nayef Aguerd', 'Morocco', 'CB', 81, 48, 84, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(130, 'Tariq Lamptey', 'Ghana', 'RB', 80, 70, 74, 76, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(131, 'Thomas Partey', 'Ghana', 'CDM', 84, 68, 83, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(132, 'Mohammed Kudus', 'Ghana', 'CAM', 83, 80, 62, 80, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(133, 'Jordan Ayew', 'Ghana', 'ST', 80, 78, 48, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(51, 'David De Geazz', 'Spain', 'GK', 82, 38, 85, 73, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(52, 'Marc-Andre Ter Stegen', 'Germany', 'GK', 84, 39, 86, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(53, 'Keylor Navasquez', 'Costa Rica', 'GK', 81, 36, 84, 71, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(54, 'Emiliano Martinezz', 'Argentina', 'GK', 83, 37, 85, 73, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(55, 'Ruben Diazinho', 'Portugal', 'CB', 86, 55, 90, 80, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(56, 'Marquinhos Santos', 'Brazil', 'CB', 85, 54, 89, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(57, 'Alessandro Bastonii', 'Italy', 'CB', 84, 52, 88, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(58, 'William Salibaz', 'France', 'CB', 85, 53, 89, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(59, 'Josko Gvardiolo', 'Croatia', 'CB', 84, 56, 87, 78, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(60, 'David Alabasz', 'Austria', 'CB', 83, 58, 86, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(61, 'Mats Hummelsz', 'Germany', 'CB', 82, 50, 87, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(62, 'Raphael Varanee', 'France', 'CB', 84, 51, 88, 76, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(63, 'Kim Min-Jaez', 'South Korea', 'CB', 83, 49, 87, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(64, 'Antonio Rudigero', 'Germany', 'CB', 84, 53, 88, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(65, 'Jules Koundez', 'France', 'CB', 83, 54, 86, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(66, 'Theo Hernandezz', 'France', 'LB', 85, 72, 78, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(67, 'Alphonso Daviesz', 'Canada', 'LB', 84, 74, 76, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(68, 'Ferland Mendyz', 'France', 'LB', 83, 68, 79, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(69, 'Andrew Robertsono', 'Scotland', 'LB', 82, 70, 77, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(70, 'Nuno Mendesz', 'Portugal', 'LB', 83, 73, 75, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(71, 'Achraf Hakimii', 'Morocco', 'RB', 85, 76, 77, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(72, 'Kyle Walkero', 'England', 'RB', 83, 68, 80, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(73, 'Dani Carvajalz', 'Spain', 'RB', 84, 70, 79, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(74, 'Reece Jameso', 'England', 'RB', 82, 72, 77, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(75, 'Trent Alexander-Arnoldo', 'England', 'RB', 86, 78, 74, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(76, 'Casemiro Santos', 'Brazil', 'CDM', 84, 68, 85, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(77, 'Joshua Kimmichz', 'Germany', 'CDM', 86, 72, 82, 88, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(78, 'Rodri Hernandez', 'Spain', 'CDM', 87, 70, 84, 85, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(79, 'Declan Ricez', 'England', 'CDM', 80, 78, 78, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(80, 'Aurelien Tchouamenii', 'France', 'CDM', 84, 66, 82, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(81, 'N\'Golo Kantez', 'France', 'CDM', 83, 64, 84, 84, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(82, 'Sergio Busquetso', 'Spain', 'CDM', 82, 62, 81, 86, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(83, 'Frenkie De Jongz', 'Netherlands', 'CM', 86, 76, 74, 85, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(84, 'Pedri Gonzalezz', 'Spain', 'CM', 85, 78, 72, 86, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(85, 'Gavi Lopez', 'Spain', 'CM', 84, 79, 70, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(86, 'Jude Bellinghamz', 'England', 'CM', 80, 78, 78, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(87, 'Eduardo Camavingao', 'France', 'CM', 84, 77, 75, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(88, 'Bruno Fernandesz', 'Portugal', 'CAM', 87, 84, 66, 85, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(89, 'Bernardo Silvaa', 'Portugal', 'CAM', 86, 82, 68, 84, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(90, 'Jack Grealishz', 'England', 'CAM', 83, 80, 64, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(91, 'James Maddisono', 'England', 'CAM', 84, 81, 62, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(92, 'Florian Wirtzz', 'Germany', 'CAM', 85, 83, 60, 84, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(93, 'Jamal Musialaz', 'Germany', 'CAM', 86, 84, 62, 85, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(94, 'Martin Odegaardz', 'Norway', 'CAM', 85, 82, 63, 86, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(95, 'Phil Fodenn', 'England', 'LW', 87, 87, 58, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(96, 'Rafael Leaoo', 'Portugal', 'LW', 85, 86, 54, 80, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(97, 'Dusan Vlahovico', 'Serbia', 'ST', 84, 85, 52, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(98, 'Lautaro Martinezz', 'Argentina', 'ST', 87, 88, 50, 80, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(99, 'Alexander Isako', 'Sweden', 'ST', 86, 87, 51, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(100, 'Rasmus Hojlundz', 'Denmark', 'ST', 83, 84, 48, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(101, 'Alvaro Morataz', 'Spain', 'ST', 82, 82, 50, 77, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(102, 'Joshua Zirkzeez', 'Netherlands', 'ST', 81, 80, 47, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(103, 'Harry Kanez', 'England', 'ST', 89, 90, 52, 84, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(104, 'Romelu Lukakuz', 'Belgium', 'ST', 83, 85, 46, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(105, 'Victor Osimheno', 'Nigeria', 'ST', 86, 88, 48, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(106, 'Luis Diazz', 'Colombia', 'LW', 85, 86, 54, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(107, 'Grealish Jack', 'England', 'LW', 83, 82, 56, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(108, 'Vini Juniorz', 'Brazil', 'LW', 90, 87, 87, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(109, 'Rodrygo Goes', 'Brazil', 'RW', 86, 87, 52, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(110, 'Bukayo Sakaz', 'England', 'RW', 87, 88, 54, 83, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(111, 'Marcus Rashfordz', 'England', 'LW', 84, 85, 50, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(112, 'Eder Militaoz', 'Brazil', 'CB', 85, 52, 88, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(113, 'Diego Carloso', 'Brazil', 'CB', 81, 48, 84, 74, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(114, 'Fikayo Tomorio', 'England', 'CB', 82, 50, 85, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(115, 'Eric Diero', 'England', 'CB', 80, 47, 83, 76, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(116, 'Gleison Bremero', 'Brazil', 'CB', 83, 51, 86, 76, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(117, 'Nathan Akez', 'Netherlands', 'CB', 83, 52, 85, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(118, 'Jurrien Timberz', 'Netherlands', 'CB', 82, 50, 84, 77, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(119, 'Christopher Nkunkuu', 'France', 'CAM', 86, 84, 62, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(120, 'Kingsley Comanz', 'France', 'LW', 84, 84, 52, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(121, 'Ousmane Dembelez', 'France', 'RW', 83, 83, 50, 78, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(122, 'Joao Felixz', 'Portugal', 'CAM', 85, 82, 60, 81, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(123, 'Matheus Nunezz', 'Portugal', 'CM', 82, 76, 70, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(124, 'Joao Palhinhao', 'Portugal', 'CDM', 83, 64, 82, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(125, 'Goncalo Ramosz', 'Portugal', 'ST', 84, 85, 48, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(126, 'Sofyan Amrabatz', 'Morocco', 'CDM', 82, 62, 81, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(127, 'Hakim Ziyecho', 'Morocco', 'RW', 81, 80, 50, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(128, 'Ashraf Hakimii', 'Morocco', 'RB', 85, 76, 77, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(129, 'Nayef Aguerdo', 'Morocco', 'CB', 81, 48, 84, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(130, 'Tariq Lampteyz', 'Ghana', 'RB', 80, 70, 74, 76, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(131, 'Thomas Parteyz', 'Ghana', 'CDM', 84, 68, 83, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(132, 'Mohammed Kuduso', 'Ghana', 'CAM', 83, 80, 62, 80, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(133, 'Jordan Ayewo', 'Ghana', 'ST', 80, 78, 48, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
 (134, 'Sergej Milinkovic-Savic', 'Serbia', 'CM', 85, 78, 72, 83, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(135, 'Aleksandar Mitrovic', 'Serbia', 'ST', 82, 83, 46, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(136, 'Nikola Milenkovic', 'Serbia', 'CB', 81, 48, 84, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(137, 'Hirving Lozano', 'Mexico', 'LW', 82, 82, 50, 77, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(138, 'Raul Jimenez', 'Mexico', 'ST', 80, 78, 46, 74, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(135, 'Aleksandar Mitrovico', 'Serbia', 'ST', 82, 83, 46, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(136, 'Nikola Milenkovico', 'Serbia', 'CB', 81, 48, 84, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(137, 'Hirving Lozanoz', 'Mexico', 'LW', 82, 82, 50, 77, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(138, 'Raul Jimenezz', 'Mexico', 'ST', 80, 78, 46, 74, 6, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
 (139, 'Edson Alvarez', 'Mexico', 'CDM', 83, 64, 82, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(140, 'Johan Vasquez', 'Mexico', 'CB', 80, 46, 83, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(141, 'Enzo Fernandez', 'Argentina', 'CM', 87, 78, 74, 85, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(142, 'Alexis Mac Allister', 'Argentina', 'CM', 85, 76, 72, 84, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(140, 'Johan Vasquezz', 'Mexico', 'CB', 80, 46, 83, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(141, 'Enzo Fernandezo', 'Argentina', 'CM', 87, 78, 74, 85, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(142, 'Alexis Mac Allistero', 'Argentina', 'CM', 85, 76, 72, 84, 6, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
 (143, 'Julian Alvarez', 'Argentina', 'ST', 87, 88, 50, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(144, 'Nicolas Otamendi', 'Argentina', 'CB', 82, 48, 86, 78, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(144, 'Nicolas Otamendiz', 'Argentina', 'CB', 82, 48, 86, 78, 6, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
 (145, 'Leandro Paredes', 'Argentina', 'CDM', 81, 62, 80, 79, 6, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(146, 'Marcelo', 'Brazil', 'LB', 92, 78, 76, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(147, 'Dani Alves', 'Brazil', 'RB', 93, 80, 78, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(148, 'Sergio Ramos', 'Spain', 'CB', 94, 70, 95, 87, 7, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(149, 'Gerard Pique', 'Spain', 'CB', 92, 60, 93, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(150, 'Carles Puyol', 'Spain', 'CB', 95, 55, 96, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(151, 'Roberto Carlos', 'Brazil', 'LB', 98, 82, 80, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(152, 'Cafu', 'Brazil', 'RB', 97, 80, 82, 89, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(153, 'Franco Baresi', 'Italy', 'CB', 96, 56, 97, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(146, 'Marcello Vieira', 'Brazil', 'LB', 92, 78, 76, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(147, 'Daniel Alvez', 'Brazil', 'RB', 93, 80, 78, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(148, 'Sergio Ramires', 'Spain', 'CB', 94, 70, 95, 87, 7, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(149, 'Gerard Piquet', 'Spain', 'CB', 92, 60, 93, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(150, 'Carles Puyolz', 'Spain', 'CB', 95, 55, 96, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(151, 'Roberto Carloz', 'Brazil', 'LB', 98, 82, 80, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(152, 'Cafuzinho', 'Brazil', 'RB', 97, 80, 82, 89, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(153, 'Franco Baresio', 'Italy', 'CB', 96, 56, 97, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
 (154, 'Fabio Cannavaro', 'Italy', 'CB', 133, 130, 172, 164, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
-(155, 'Giuseppe Bergomi', 'Italy', 'RB', 92, 68, 90, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(156, 'Paolo Roberto', 'Italy', 'GK', 132, 118, 168, 162, 7, NULL, 0, 1, 1, 20, '2026-06-18 03:09:11'),
-(157, 'Dino Zoff', 'Italy', 'GK', 93, 40, 91, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(158, 'Fabien Barthez', 'France', 'GK', 91, 38, 88, 83, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(159, 'Gianluigi Buffon', 'Italy', 'GK', 97, 45, 95, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(160, 'Iker Casillas', 'Spain', 'GK', 96, 42, 94, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(161, 'Peter Schmeichel', 'Denmark', 'GK', 94, 40, 92, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(162, 'Oliver Kahn', 'Germany', 'GK', 95, 42, 93, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(163, 'Alessandro Nesta', 'Italy', 'CB', 94, 52, 96, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(164, 'Gennaro Gattuso', 'Italy', 'CDM', 92, 64, 88, 90, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(165, 'Andrea Pirlo', 'Italy', 'CM', 98, 82, 76, 95, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(166, 'Roberto Baggio', 'Italy', 'CAM', 97, 86, 64, 92, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(167, 'Francesco Totti', 'Italy', 'CAM', 95, 84, 60, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(168, 'Alessandro Del Piero', 'Italy', 'ST', 94, 86, 54, 89, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(155, 'Giuseppe Bergo', 'Italy', 'RB', 92, 68, 90, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(156, 'Paolo Robertini', 'Italy', 'GK', 132, 118, 168, 162, 7, NULL, 0, 1, 1, 20, '2026-06-18 03:09:11'),
+(157, 'Dino Zoffino', 'Italy', 'GK', 93, 40, 91, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(158, 'Fabien Barthezzi', 'France', 'GK', 91, 38, 88, 83, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(159, 'Gianluigi Buffone', 'Italy', 'GK', 97, 45, 95, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(160, 'Iker Casillaz', 'Spain', 'GK', 96, 42, 94, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(161, 'Peter Schmeichelo', 'Denmark', 'GK', 94, 40, 92, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(162, 'Oliver Kahnez', 'Germany', 'GK', 95, 42, 93, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(163, 'Alessandro Nestor', 'Italy', 'CB', 94, 52, 96, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(164, 'Gennaro Gattuzo', 'Italy', 'CDM', 92, 64, 88, 90, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(165, 'Andrea Pirlone', 'Italy', 'CM', 98, 82, 76, 95, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(166, 'Roberto Bagiio', 'Italy', 'CAM', 97, 86, 64, 92, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(167, 'Francesco Tottoro', 'Italy', 'CAM', 95, 84, 60, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(168, 'Alessandro Del Pieroz', 'Italy', 'ST', 94, 86, 54, 89, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
 (169, 'Christian Vieri', 'Italy', 'ST', 93, 88, 50, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
 (170, 'Gianluca Vialli', 'Italy', 'ST', 92, 85, 50, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(171, 'Fabio Toldo', 'Italy', 'GK', 90, 38, 87, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(172, 'Walter Zenga', 'Italy', 'GK', 130, 115, 165, 159, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
-(173, 'Claudio Gentile', 'Italy', 'CB', 91, 50, 93, 82, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(171, 'Fabio Toldino', 'Italy', 'GK', 90, 38, 87, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(172, 'Walter Zengaz', 'Italy', 'GK', 130, 115, 165, 159, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
+(173, 'Claudio Gentil', 'Italy', 'CB', 91, 50, 93, 82, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
 (174, 'Marco Tardelli', 'Italy', 'CM', 93, 78, 74, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(175, 'Ryan Giggs', 'Wales', 'LW', 94, 86, 54, 88, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(176, 'Roy Keane', 'Ireland', 'CDM', 93, 66, 86, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(177, 'Paul Scholes', 'England', 'CM', 95, 82, 74, 92, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(178, 'David Beckham', 'England', 'RW', 96, 84, 60, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(179, 'Gary Neville', 'England', 'RB', 91, 68, 86, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(180, 'Rio Ferdinand', 'England', 'CB', 93, 56, 95, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(181, 'Wayne Rooney', 'England', 'ST', 135, 168, 132, 164, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
-(182, 'Steven Gerrard', 'England', 'CM', 96, 84, 76, 92, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(183, 'Frank Lampard', 'England', 'CM', 96, 86, 72, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(184, 'John Terry', 'England', 'CB', 94, 56, 96, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(185, 'Ashley Cole', 'England', 'LB', 131, 150, 156, 162, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
-(186, 'Sol Campbell', 'England', 'CB', 92, 54, 94, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(187, 'Bobby Charlton', 'England', 'CAM', 90, 87, 87, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(188, 'Alan Shearer', 'England', 'ST', 95, 92, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(189, 'Michael Owen', 'England', 'ST', 93, 90, 46, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(190, 'Gary Lineker', 'England', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(191, 'Jimmy Greaves', 'England', 'ST', 94, 90, 44, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(192, 'Kevin Keegan', 'England', 'RW', 93, 86, 52, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(193, 'Xavi Hernandez', 'Spain', 'CM', 137, 158, 154, 172, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
-(194, 'Andres Iniesta', 'Spain', 'CM', 137, 160, 152, 171, 7, NULL, 0, 1, 1, 20, '2026-06-18 03:09:11'),
-(195, 'Xabi Alonso', 'Spain', 'CDM', 95, 72, 84, 92, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(175, 'Ryan Giggsy', 'Wales', 'LW', 94, 86, 54, 88, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(176, 'Roy Keaner', 'Ireland', 'CDM', 93, 66, 86, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(177, 'Paul Scholario', 'England', 'CM', 95, 82, 74, 92, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(178, 'David Beckz', 'England', 'RW', 96, 84, 60, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(179, 'Gary Nevillez', 'England', 'RB', 91, 68, 86, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(180, 'Rio Ferdinan', 'England', 'CB', 93, 56, 95, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(181, 'Wayne Roonez', 'England', 'ST', 135, 168, 132, 164, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
+(182, 'Steven Gerrardz', 'England', 'CM', 96, 84, 76, 92, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(183, 'Frank Lampardz', 'England', 'CM', 96, 86, 72, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(184, 'John Terrio', 'England', 'CB', 94, 56, 96, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(185, 'Ashley Colero', 'England', 'LB', 131, 150, 156, 162, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
+(186, 'Sol Campbellz', 'England', 'CB', 92, 54, 94, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(187, 'Bobby Charlto', 'England', 'CAM', 90, 87, 87, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(188, 'Alan Sheareno', 'England', 'ST', 95, 92, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(189, 'Michael Oweno', 'England', 'ST', 93, 90, 46, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(190, 'Gary Linekero', 'England', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(191, 'Jimmy Greaveso', 'England', 'ST', 94, 90, 44, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(192, 'Kevin Keegano', 'England', 'RW', 93, 86, 52, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(193, 'Xavi Hernandes', 'Spain', 'CM', 137, 158, 154, 172, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
+(194, 'Andres Iniesto', 'Spain', 'CM', 137, 160, 152, 171, 7, NULL, 0, 1, 1, 20, '2026-06-18 03:09:11'),
+(195, 'Xabi Alonser', 'Spain', 'CDM', 95, 72, 84, 92, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
 (196, 'Cesc Fabregas', 'Spain', 'CM', 94, 80, 72, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(197, 'Raul Gonzalez', 'Spain', 'ST', 96, 90, 52, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(198, 'Fernando Torres', 'Spain', 'ST', 94, 88, 50, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(199, 'David Villa', 'Spain', 'ST', 95, 90, 50, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(200, 'Fernando Hierro', 'Spain', 'CB', 92, 56, 92, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(201, 'Emilio Butragueno', 'Spain', 'ST', 93, 88, 48, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(202, 'Luis Suarez', 'Uruguay', 'ST', 90, 87, 87, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(203, 'Diego Godin', 'Uruguay', 'CB', 91, 52, 94, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(204, 'Edinson Cavani', 'Uruguay', 'ST', 92, 88, 48, 83, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(205, 'Alvaro Recoba', 'Uruguay', 'CAM', 90, 82, 56, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(206, 'Johan Cruyff', 'Netherlands', 'CAM', 99, 90, 68, 94, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(207, 'Marco van Basten', 'Netherlands', 'ST', 98, 92, 52, 88, 7, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(208, 'Ruud Gullit', 'Netherlands', 'CM', 97, 84, 74, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(209, 'Frank Rijkaard', 'Netherlands', 'CDM', 96, 70, 86, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(210, 'Dennis Bergkamp', 'Netherlands', 'CAM', 96, 86, 62, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(211, 'Patrick Kluivert', 'Netherlands', 'ST', 93, 88, 48, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(212, 'Clarence Seedorf', 'Netherlands', 'CM', 95, 80, 74, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(213, 'Edgar Davids', 'Netherlands', 'CDM', 94, 68, 84, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(214, 'Robin van Persie', 'Netherlands', 'ST', 94, 88, 50, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(215, 'Arjen Robben', 'Netherlands', 'RW', 134, 166, 128, 162, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
-(216, 'Wesley Sneijder', 'Netherlands', 'CAM', 95, 84, 58, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(217, 'Rafael van der Vaart', 'Netherlands', 'CAM', 91, 82, 56, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(218, 'Ruud van Nistelrooy', 'Netherlands', 'ST', 95, 90, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(219, 'Marc Overmars', 'Netherlands', 'LW', 93, 88, 52, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(220, 'Gio van Bronckhorst', 'Netherlands', 'LB', 90, 70, 78, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(221, 'Michael Ballack', 'Germany', 'CM', 95, 82, 76, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(222, 'Miroslav Klose', 'Germany', 'ST', 94, 88, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(223, 'Jurgen Klinsmann', 'Germany', 'ST', 93, 86, 50, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(224, 'Gerd Muller', 'Germany', 'ST', 98, 94, 44, 86, 7, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
-(225, 'Franz Beckenbauer', 'Germany', 'CB', 99, 60, 98, 94, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(226, 'Bastian Schweinsteiger', 'Germany', 'CM', 93, 78, 76, 88, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(227, 'Lothar Matthaus', 'Germany', 'CM', 97, 84, 78, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(228, 'Karl-Heinz Rummenigge', 'Germany', 'ST', 96, 90, 50, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(229, 'Thomas Muller', 'Germany', 'CAM', 92, 84, 60, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(230, 'Toni Kroos', 'Germany', 'CM', 94, 78, 72, 92, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(231, 'Zico', 'Brazil', 'CAM', 98, 88, 64, 92, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(232, 'Pele', 'Brazil', 'ST', 138, 172, 132, 170, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
-(233, 'Garrincha', 'Brazil', 'RW', 99, 94, 52, 90, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
-(234, 'Romario', 'Brazil', 'ST', 98, 94, 50, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(235, 'Rivaldo', 'Brazil', 'CAM', 97, 88, 62, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(197, 'Raul Gonzaleze', 'Spain', 'ST', 96, 90, 52, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(198, 'Fernando Torreso', 'Spain', 'ST', 94, 88, 50, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(199, 'David Villano', 'Spain', 'ST', 95, 90, 50, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(200, 'Fernando Hiero', 'Spain', 'CB', 92, 56, 92, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(201, 'Emilio Butraguen', 'Spain', 'ST', 93, 88, 48, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(202, 'Luis Suarezo', 'Uruguay', 'ST', 90, 87, 87, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(203, 'Diego Godinez', 'Uruguay', 'CB', 91, 52, 94, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(204, 'Edinson Cavanio', 'Uruguay', 'ST', 92, 88, 48, 83, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(205, 'Alvaro Recobez', 'Uruguay', 'CAM', 90, 82, 56, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(206, 'Johan Cruyfio', 'Netherlands', 'CAM', 99, 90, 68, 94, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(207, 'Marco Van Basteno', 'Netherlands', 'ST', 98, 92, 52, 88, 7, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(208, 'Ruud Gulliter', 'Netherlands', 'CM', 97, 84, 74, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(209, 'Frank Rijkaardo', 'Netherlands', 'CDM', 96, 70, 86, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(210, 'Dennis Bergkampo', 'Netherlands', 'CAM', 96, 86, 62, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(211, 'Patrick Kluiverti', 'Netherlands', 'ST', 93, 88, 48, 85, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(212, 'Clarence Seedorfo', 'Netherlands', 'CM', 95, 80, 74, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(213, 'Edgar Davidso', 'Netherlands', 'CDM', 94, 68, 84, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(214, 'Robin Van Persio', 'Netherlands', 'ST', 94, 88, 50, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(215, 'Arjen Robbeno', 'Netherlands', 'RW', 134, 166, 128, 162, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
+(216, 'Wesley Sneijdero', 'Netherlands', 'CAM', 95, 84, 58, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(217, 'Rafael Van Der Vaarto', 'Netherlands', 'CAM', 91, 82, 56, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(218, 'Ruud Van Nistelrooyo', 'Netherlands', 'ST', 95, 90, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(219, 'Marc Overmarso', 'Netherlands', 'LW', 93, 88, 52, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(220, 'Gio Van Bronckhorsto', 'Netherlands', 'LB', 90, 70, 78, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(221, 'Michael Ballacko', 'Germany', 'CM', 95, 82, 76, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(222, 'Miroslav Kloseo', 'Germany', 'ST', 94, 88, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(223, 'Jurgen Klinsmanno', 'Germany', 'ST', 93, 86, 50, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(224, 'Gerd Mullero', 'Germany', 'ST', 98, 94, 44, 86, 7, NULL, 0, 1, 3, 1, '2026-06-18 03:09:11'),
+(225, 'Franz Beckenbauero', 'Germany', 'CB', 99, 60, 98, 94, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(226, 'Bastian Schweinsteigero', 'Germany', 'CM', 93, 78, 76, 88, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(227, 'Lothar Matthauso', 'Germany', 'CM', 97, 84, 78, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(228, 'Karl-Heinz Rummeniggeo', 'Germany', 'ST', 96, 90, 50, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(229, 'Thomas Mullero', 'Germany', 'CAM', 92, 84, 60, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(230, 'Toni Krooso', 'Germany', 'CM', 94, 78, 72, 92, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(231, 'Zico Ferreiro', 'Brazil', 'CAM', 98, 88, 64, 92, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(232, 'Pele Nascimento', 'Brazil', 'ST', 138, 172, 132, 170, 7, NULL, 0, 1, 5, 20, '2026-06-18 03:09:11'),
+(233, 'Garrincha Dos Santos', 'Brazil', 'RW', 99, 94, 52, 90, 7, NULL, 0, 1, 4, 1, '2026-06-18 03:09:11'),
+(234, 'Romario De Souza', 'Brazil', 'ST', 98, 94, 50, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(235, 'Rivaldo Ferreiro', 'Brazil', 'CAM', 97, 88, 62, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
 (236, 'Ronaldinho Gaucho', 'Brazil', 'CAM', 98, 90, 62, 92, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(237, 'Thierry Henry', 'France', 'ST', 97, 92, 52, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(238, 'Zinedine Zidane', 'France', 'CAM', 138, 166, 144, 170, 7, NULL, 0, 1, 1, 20, '2026-06-18 03:09:11'),
-(239, 'Patrick Vieira', 'France', 'CDM', 96, 70, 88, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(240, 'Michel Platini', 'France', 'CAM', 137, 164, 142, 168, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
-(241, 'Just Fontaine', 'France', 'ST', 95, 92, 46, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(242, 'Raymond Kopa', 'France', 'CAM', 94, 86, 60, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
-(243, 'Robert Lewandowski', 'Poland', 'ST', 96, 92, 50, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
-(244, 'Kylian Mbappe', 'France', 'ST', 95, 93, 54, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
-(245, 'George Weah', 'Liberia', 'ST', 94, 88, 48, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(237, 'Thierry Henryo', 'France', 'ST', 97, 92, 52, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(238, 'Zinedine Zidaneo', 'France', 'CAM', 138, 166, 144, 170, 7, NULL, 0, 1, 1, 20, '2026-06-18 03:09:11'),
+(239, 'Patrick Vieirao', 'France', 'CDM', 96, 70, 88, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(240, 'Michel Platinio', 'France', 'CAM', 137, 164, 142, 168, 7, NULL, 0, 1, 2, 20, '2026-06-18 03:09:11'),
+(241, 'Just Fontaineo', 'France', 'ST', 95, 92, 46, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(242, 'Raymond Kopao', 'France', 'CAM', 94, 86, 60, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 03:09:11'),
+(243, 'Robert Lewandowskio', 'Poland', 'ST', 96, 92, 50, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
+(244, 'Kylian Mboppe', 'France', 'ST', 95, 93, 54, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 03:09:11'),
+(245, 'George Weaho', 'Liberia', 'ST', 94, 88, 48, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 03:09:11'),
 (246, 'Fajar Nugroho', 'Indonesia', 'CB', 45, 35, 35, 35, 1, NULL, 0, 0, 1, 1, '2026-06-18 03:09:29'),
 (247, 'Budi Santoso', 'Indonesia', 'CB', 45, 35, 35, 35, 1, NULL, 0, 0, 1, 1, '2026-06-18 03:10:39'),
 (248, 'Kenji Tanaka', 'Japan', 'LB', 45, 35, 35, 35, 1, NULL, 0, 0, 1, 1, '2026-06-18 03:10:41'),
@@ -421,213 +421,213 @@ INSERT INTO `football_players` (`id`, `player_name`, `country`, `position`, `rat
 (291, 'Ji-Hoon Park', 'South Korea', 'RB', 45, 35, 35, 35, 1, NULL, 0, 0, 2, 1, '2026-06-18 10:08:07'),
 (292, 'Player 7', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-18 10:08:13'),
 (293, 'Rachman Maulana', 'Indonesia', 'LB', 128, 163, 163, 163, 7, NULL, 1, 1, 2, 20, '2026-06-18 10:14:10'),
-(294, 'Hugo Lloris', 'France', 'GK', 85, 40, 88, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(295, 'Samir Handanovic', 'Slovenia', 'GK', 82, 38, 86, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(296, 'Kasper Schmeichel', 'Denmark', 'GK', 81, 36, 84, 72, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(297, 'Jordan Pickford', 'England', 'GK', 80, 37, 83, 71, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(298, 'Unai Simon', 'Spain', 'GK', 83, 39, 85, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(299, 'David Raya', 'Spain', 'GK', 81, 36, 82, 72, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(300, 'Bernd Leno', 'Germany', 'GK', 80, 35, 81, 70, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(301, 'Yann Sommer', 'Switzerland', 'GK', 82, 38, 84, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(302, 'Fernando Muslera', 'Uruguay', 'GK', 82, 40, 85, 74, 6, NULL, 0, 1, 2, 2, '2026-06-18 16:30:20'),
-(303, 'Claudio Bravo', 'Chile', 'GK', 80, 36, 81, 70, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(304, 'Thiago Silva', 'Brazil', 'CB', 84, 56, 90, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(305, 'Kalidou Koulibaly', 'Senegal', 'CB', 85, 55, 91, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(306, 'Giorgio Chiellini', 'Italy', 'CB', 83, 54, 89, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(307, 'Leonardo Bonucci', 'Italy', 'CB', 82, 53, 88, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(308, 'Jerome Boateng', 'Germany', 'CB', 81, 52, 87, 74, 6, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(309, 'David Luiz', 'Brazil', 'CB', 80, 50, 85, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(310, 'Vincent Kompany', 'Belgium', 'CB', 83, 54, 88, 76, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(311, 'John Stones', 'England', 'CB', 82, 53, 87, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(312, 'Harry Maguire', 'England', 'CB', 80, 48, 84, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(313, 'Pau Torres', 'Spain', 'CB', 81, 52, 86, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(314, 'Aymeric Laporte', 'France', 'CB', 82, 53, 87, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(315, 'Toby Alderweireld', 'Belgium', 'CB', 82, 53, 87, 75, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(316, 'Jan Vertonghen', 'Belgium', 'CB', 81, 52, 86, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(317, 'Stefan Savic', 'Montenegro', 'CB', 80, 50, 84, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(318, 'Niklas Sule', 'Germany', 'CB', 82, 51, 87, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(319, 'Matthias Ginter', 'Germany', 'CB', 81, 50, 85, 74, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(320, 'Jordi Alba', 'Spain', 'LB', 84, 74, 76, 79, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(321, 'Ben Chilwell', 'England', 'LB', 82, 72, 75, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(322, 'Luke Shaw', 'England', 'LB', 81, 70, 76, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(323, 'Alex Sandro', 'Brazil', 'LB', 82, 73, 74, 78, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(294, 'Hugo Lloriso', 'France', 'GK', 85, 40, 88, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(295, 'Samir Handanovico', 'Slovenia', 'GK', 82, 38, 86, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(296, 'Kasper Schmeichelz', 'Denmark', 'GK', 81, 36, 84, 72, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(297, 'Jordan Pickfordz', 'England', 'GK', 80, 37, 83, 71, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(298, 'Unai Simonz', 'Spain', 'GK', 83, 39, 85, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(299, 'David Rayao', 'Spain', 'GK', 81, 36, 82, 72, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(300, 'Bernd Lenoz', 'Germany', 'GK', 80, 35, 81, 70, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(301, 'Yann Sommerz', 'Switzerland', 'GK', 82, 38, 84, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(302, 'Fernando Muslerao', 'Uruguay', 'GK', 82, 40, 85, 74, 6, NULL, 0, 1, 2, 2, '2026-06-18 16:30:20'),
+(303, 'Claudio Bravol', 'Chile', 'GK', 80, 36, 81, 70, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(304, 'Thiago Silvaz', 'Brazil', 'CB', 84, 56, 90, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(305, 'Kalidou Koulibalyz', 'Senegal', 'CB', 85, 55, 91, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(306, 'Giorgio Chiellinii', 'Italy', 'CB', 83, 54, 89, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(307, 'Leonardo Bonuccio', 'Italy', 'CB', 82, 53, 88, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(308, 'Jerome Boatengo', 'Germany', 'CB', 81, 52, 87, 74, 6, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(309, 'David Luizo', 'Brazil', 'CB', 80, 50, 85, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(310, 'Vincent Kompanyz', 'Belgium', 'CB', 83, 54, 88, 76, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(311, 'John Stonesz', 'England', 'CB', 82, 53, 87, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(312, 'Harry Maguiree', 'England', 'CB', 80, 48, 84, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(313, 'Pau Torresz', 'Spain', 'CB', 81, 52, 86, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(314, 'Aymeric Laportez', 'France', 'CB', 82, 53, 87, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(315, 'Toby Alderweireldz', 'Belgium', 'CB', 82, 53, 87, 75, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(316, 'Jan Vertongheno', 'Belgium', 'CB', 81, 52, 86, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(317, 'Stefan Savico', 'Montenegro', 'CB', 80, 50, 84, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(318, 'Niklas Sulero', 'Germany', 'CB', 82, 51, 87, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(319, 'Matthias Gintero', 'Germany', 'CB', 81, 50, 85, 74, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(320, 'Jordi Albaz', 'Spain', 'LB', 84, 74, 76, 79, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(321, 'Ben Chilwellz', 'England', 'LB', 82, 72, 75, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(322, 'Luke Shawz', 'England', 'LB', 81, 70, 76, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(323, 'Alex Sandroo', 'Brazil', 'LB', 82, 73, 74, 78, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
 (324, 'Joao Cancelo', 'Portugal', 'RB', 86, 78, 77, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(325, 'Ricardo Pereira', 'Portugal', 'RB', 81, 72, 74, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(326, 'Alessandro Florenzi', 'Italy', 'RB', 80, 70, 73, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(327, 'Kieran Trippier', 'England', 'RB', 82, 74, 75, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(328, 'Fernando Reges', 'Brazil', 'CDM', 81, 64, 82, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(329, 'Jorginho', 'Italy', 'CDM', 82, 66, 83, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(330, 'Marco Verratti', 'Italy', 'CM', 84, 76, 72, 85, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(331, 'Miralem Pjanic', 'Bosnia', 'CM', 80, 72, 70, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(332, 'Ivan Rakitic', 'Croatia', 'CM', 81, 74, 71, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(333, 'James Ward-Prowse', 'England', 'CM', 80, 73, 69, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(334, 'Mason Mount', 'England', 'CM', 83, 78, 70, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(335, 'Kai Havertz', 'Germany', 'CAM', 84, 80, 66, 83, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(336, 'Julian Brandt', 'Germany', 'CAM', 81, 78, 64, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(325, 'Ricardo Pereirzo', 'Portugal', 'RB', 81, 72, 74, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(326, 'Alessandro Florenzio', 'Italy', 'RB', 80, 70, 73, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(327, 'Kieran Trippiero', 'England', 'RB', 82, 74, 75, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(328, 'Fernando Regeso', 'Brazil', 'CDM', 81, 64, 82, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(329, 'Jorginho Frello', 'Italy', 'CDM', 82, 66, 83, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(330, 'Marco Verrattio', 'Italy', 'CM', 84, 76, 72, 85, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(331, 'Miralem Pjanico', 'Bosnia', 'CM', 80, 72, 70, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(332, 'Ivan Rakiticc', 'Croatia', 'CM', 81, 74, 71, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(333, 'James Ward-Prowso', 'England', 'CM', 80, 73, 69, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(334, 'Mason Mountz', 'England', 'CM', 83, 78, 70, 82, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(335, 'Kai Havertzz', 'Germany', 'CAM', 84, 80, 66, 83, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(336, 'Julian Brandtzz', 'Germany', 'CAM', 81, 78, 64, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (337, 'Leon Goretzka', 'Germany', 'CM', 83, 76, 74, 82, 6, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
-(338, 'Isco', 'Spain', 'CAM', 82, 79, 62, 81, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(339, 'Pablo Fornals', 'Spain', 'CAM', 80, 76, 60, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(340, 'Dani Ceballos', 'Spain', 'CM', 80, 74, 68, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(341, 'Cengiz Under', 'Turkey', 'RW', 80, 78, 56, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(342, 'Adama Traore', 'Spain', 'RW', 81, 76, 54, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(343, 'Marcel Sabitzer', 'Austria', 'CM', 82, 76, 72, 80, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(344, 'Konrad Laimer', 'Austria', 'CDM', 80, 66, 80, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(345, 'Corentin Tolisso', 'France', 'CM', 81, 74, 70, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(346, 'Thomas Lemar', 'France', 'CM', 80, 72, 68, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(347, 'Nabil Fekir', 'France', 'CAM', 83, 80, 60, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(338, 'Isco Alarcon', 'Spain', 'CAM', 82, 79, 62, 81, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(339, 'Pablo Fornalsz', 'Spain', 'CAM', 80, 76, 60, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(340, 'Dani Ceballosz', 'Spain', 'CM', 80, 74, 68, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(341, 'Cengiz Underz', 'Turkey', 'RW', 80, 78, 56, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(342, 'Adama Traorez', 'Spain', 'RW', 81, 76, 54, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(343, 'Marcel Sabitzerz', 'Austria', 'CM', 82, 76, 72, 80, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(344, 'Konrad Laimero', 'Austria', 'CDM', 80, 66, 80, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(345, 'Corentin Tolissoro', 'France', 'CM', 81, 74, 70, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(346, 'Thomas Lemaro', 'France', 'CM', 80, 72, 68, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(347, 'Nabil Fekiro', 'France', 'CAM', 83, 80, 60, 81, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (348, 'Tanguy Ndombele', 'France', 'CM', 80, 72, 66, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(349, 'Donny van de Beek', 'Netherlands', 'CAM', 81, 78, 62, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(350, 'Harry Winks', 'England', 'CM', 80, 70, 68, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(351, 'Eric Dier', 'England', 'CDM', 80, 64, 82, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(352, 'Leroy Sane', 'Germany', 'LW', 84, 86, 52, 80, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(353, 'Serge Gnabry', 'Germany', 'RW', 83, 85, 50, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(354, 'Jadon Sancho', 'England', 'LW', 82, 84, 48, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(355, 'Leon Bailey', 'Jamaica', 'RW', 80, 80, 46, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(356, 'Moussa Diaby', 'France', 'LW', 81, 82, 46, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(357, 'Christian Pulisic', 'USA', 'LW', 80, 80, 48, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(358, 'Callum Hudson-Odoi', 'England', 'RW', 80, 79, 47, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(359, 'Harvey Barnes', 'England', 'LW', 80, 81, 49, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(349, 'Donny Van De Beeko', 'Netherlands', 'CAM', 81, 78, 62, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(350, 'Harry Winx', 'England', 'CM', 80, 70, 68, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(351, 'Eric Diero', 'England', 'CDM', 80, 64, 82, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(352, 'Leroy Sanee', 'Germany', 'LW', 84, 86, 52, 80, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(353, 'Serge Gnabryy', 'Germany', 'RW', 83, 85, 50, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(354, 'Jadon Sanchoz', 'England', 'LW', 82, 84, 48, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(355, 'Leon Baileyy', 'Jamaica', 'RW', 80, 80, 46, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(356, 'Moussa Diabyy', 'France', 'LW', 81, 82, 46, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(357, 'Christian Pulisicc', 'USA', 'LW', 80, 80, 48, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(358, 'Callum Hudson-Odoiz', 'England', 'RW', 80, 79, 47, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(359, 'Harvey Barneszz', 'England', 'LW', 80, 81, 49, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (360, 'Ivan Perisic', 'Croatia', 'LW', 82, 82, 50, 78, 6, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(361, 'Julian Draxler', 'Germany', 'LW', 81, 80, 48, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(362, 'Emile Smith Rowe', 'England', 'LW', 82, 82, 48, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(363, 'Reiss Nelson', 'England', 'RW', 80, 80, 46, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(364, 'Ryan Sessegnon', 'England', 'LW', 80, 78, 44, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(361, 'Julian Draxlere', 'Germany', 'LW', 81, 80, 48, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(362, 'Emile Smith Rowes', 'England', 'LW', 82, 82, 48, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(363, 'Reiss Nelsono', 'England', 'RW', 80, 80, 46, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(364, 'Ryan Sessegnono', 'England', 'LW', 80, 78, 44, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (365, 'Nicolo Zaniolo', 'Italy', 'RW', 82, 82, 46, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(366, 'Federico Chiesa', 'Italy', 'RW', 85, 86, 48, 80, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(366, 'Federico Chiesao', 'Italy', 'RW', 85, 86, 48, 80, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
 (367, 'Pedro Neto', 'Portugal', 'RW', 82, 82, 46, 77, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(368, 'Trincao', 'Portugal', 'RW', 80, 80, 44, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(369, 'Karim Benzema', 'France', 'ST', 88, 90, 52, 84, 6, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
-(370, 'Antoine Griezmann', 'France', 'ST', 86, 88, 50, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(371, 'Sadio Mane', 'Senegal', 'ST', 85, 87, 48, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(372, 'Roberto Firmino', 'Brazil', 'ST', 83, 84, 46, 78, 6, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
-(373, 'Pierre-Emerick Aubameyang', 'Gabon', 'ST', 82, 83, 44, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(374, 'Olivier Giroud', 'France', 'ST', 80, 80, 44, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(375, 'Alexandre Lacazette', 'France', 'ST', 81, 82, 44, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(376, 'Ciro Immobile', 'Italy', 'ST', 84, 86, 46, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(377, 'Dries Mertens', 'Belgium', 'ST', 82, 83, 44, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(378, 'Lorenzo Insigne', 'Italy', 'ST', 83, 84, 44, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(368, 'Trincao Santos', 'Portugal', 'RW', 80, 80, 44, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(369, 'Karim Benzemaaz', 'France', 'ST', 88, 90, 52, 84, 6, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
+(370, 'Antoine Griezmannz', 'France', 'ST', 86, 88, 50, 82, 6, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(371, 'Sadio Manezz', 'Senegal', 'ST', 85, 87, 48, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(372, 'Roberto Firminio', 'Brazil', 'ST', 83, 84, 46, 78, 6, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
+(373, 'Pierre-Emerick Aubameyango', 'Gabon', 'ST', 82, 83, 44, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(374, 'Olivier Giroudz', 'France', 'ST', 80, 80, 44, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(375, 'Alexandre Lacazettez', 'France', 'ST', 81, 82, 44, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(376, 'Ciro Immobilee', 'Italy', 'ST', 84, 86, 46, 79, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(377, 'Dries Mertensz', 'Belgium', 'ST', 82, 83, 44, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(378, 'Lorenzo Insignez', 'Italy', 'ST', 83, 84, 44, 78, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
 (379, 'Edin Dzeko', 'Bosnia', 'ST', 80, 80, 42, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(380, 'Mauro Icardi', 'Argentina', 'ST', 82, 83, 42, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(381, 'Arkadiusz Milik', 'Poland', 'ST', 81, 82, 42, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(382, 'Andrea Belotti', 'Italy', 'ST', 80, 80, 44, 75, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(383, 'Danny Welbeck', 'England', 'ST', 80, 78, 42, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(384, 'Divock Origi', 'Belgium', 'ST', 80, 79, 40, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(380, 'Mauro Icardio', 'Argentina', 'ST', 82, 83, 42, 75, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(381, 'Arkadiusz Miliko', 'Poland', 'ST', 81, 82, 42, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(382, 'Andrea Belottio', 'Italy', 'ST', 80, 80, 44, 75, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(383, 'Danny Welbeckz', 'England', 'ST', 80, 78, 42, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(384, 'Divock Origio', 'Belgium', 'ST', 80, 79, 40, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (385, 'Maxi Gomez', 'Uruguay', 'ST', 80, 81, 42, 74, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(386, 'Rodrigo Moreno', 'Spain', 'ST', 81, 82, 42, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(387, 'Paco Alcacer', 'Spain', 'ST', 80, 80, 40, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(388, 'Carlos Vinicius', 'Brazil', 'ST', 80, 80, 40, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(386, 'Rodrigo Morenno', 'Spain', 'ST', 81, 82, 42, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(387, 'Paco Alcacero', 'Spain', 'ST', 80, 80, 40, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(388, 'Carlos Viniciuzz', 'Brazil', 'ST', 80, 80, 40, 73, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (389, 'Randal Kolo Muani', 'France', 'ST', 82, 83, 42, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(390, 'Marcus Thuram', 'France', 'ST', 83, 84, 44, 77, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(390, 'Marcus Thuramz', 'France', 'ST', 83, 84, 44, 77, 6, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
 (391, 'Mikkel Damsgaard', 'Denmark', 'LW', 80, 79, 44, 74, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(392, 'Ryan Gravenberch', 'Netherlands', 'CM', 81, 74, 68, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(393, 'Teun Koopmeiners', 'Netherlands', 'CM', 82, 76, 72, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(392, 'Ryan Gravenberchz', 'Netherlands', 'CM', 81, 74, 68, 78, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(393, 'Teun Koopmeinersz', 'Netherlands', 'CM', 82, 76, 72, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (394, 'Cody Gakpo', 'Netherlands', 'LW', 83, 84, 48, 79, 6, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(395, 'Xavi Simons', 'Netherlands', 'CAM', 82, 80, 60, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(396, 'Jurrien Timber', 'Netherlands', 'CB', 82, 52, 85, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(395, 'Xavi Simonsz', 'Netherlands', 'CAM', 82, 80, 60, 80, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(396, 'Jurrien Timberz', 'Netherlands', 'CB', 82, 52, 85, 77, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (397, 'Sven Botman', 'Netherlands', 'CB', 81, 50, 84, 75, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
 (398, 'Lutsharel Geertruida', 'Netherlands', 'RB', 80, 70, 74, 76, 6, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(399, 'Lev Yashin', 'Soviet Union', 'GK', 96, 45, 95, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(400, 'Gordon Banks', 'England', 'GK', 94, 43, 93, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(401, 'Sepp Maier', 'Germany', 'GK', 92, 42, 91, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(402, 'Edwin van der Sar', 'Netherlands', 'GK', 93, 44, 92, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(403, 'Petr Cech', 'Czech Republic', 'GK', 92, 42, 90, 85, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(404, 'Ubaldo Fillol', 'Argentina', 'GK', 91, 41, 89, 83, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(405, 'Jose Luis Chilavert', 'Paraguay', 'GK', 90, 50, 88, 80, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(406, 'Bobby Moore', 'England', 'CB', 95, 58, 97, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(407, 'Ronald Koeman', 'Netherlands', 'CB', 94, 60, 94, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(408, 'Gaetano Scirea', 'Italy', 'CB', 93, 56, 95, 87, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(409, 'Daniel Passarella', 'Argentina', 'CB', 93, 55, 94, 86, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(410, 'Elias Figueroa', 'Chile', 'CB', 93, 54, 95, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(411, 'Aldair', 'Brazil', 'CB', 91, 52, 93, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(412, 'Luis Pereira', 'Brazil', 'CB', 90, 50, 92, 83, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(413, 'Laurent Blanc', 'France', 'CB', 92, 56, 94, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(414, 'Frank de Boer', 'Netherlands', 'CB', 90, 54, 92, 84, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(415, 'Giacinto Facchetti', 'Italy', 'LB', 92, 72, 78, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(416, 'Paul Breitner', 'Germany', 'LB', 91, 70, 76, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(417, 'Ruud Krol', 'Netherlands', 'CB', 92, 56, 92, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(418, 'Bixente Lizarazu', 'France', 'LB', 129, 146, 154, 161, 7, NULL, 0, 1, 1, 20, '2026-06-18 16:30:20'),
-(419, 'Giovanni van Bronckhorst', 'Netherlands', 'LB', 90, 70, 78, 84, 7, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
-(420, 'Luis Figo', 'Portugal', 'RW', 134, 164, 136, 166, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
-(421, 'Gheorghe Hagi', 'Romania', 'CAM', 95, 86, 62, 91, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(422, 'Hristo Stoichkov', 'Bulgaria', 'LW', 95, 88, 56, 89, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(423, 'Michael Laudrup', 'Denmark', 'CAM', 94, 84, 60, 92, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(424, 'Brian Laudrup', 'Denmark', 'RW', 90, 82, 52, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(425, 'Zvonimir Boban', 'Croatia', 'CM', 90, 78, 70, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(426, 'Dejan Savicevic', 'Montenegro', 'CAM', 91, 82, 58, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(427, 'Dragan Stojkovic', 'Serbia', 'CAM', 90, 80, 56, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(428, 'Rui Costa', 'Portugal', 'CAM', 92, 82, 60, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(429, 'Deco', 'Portugal', 'CAM', 93, 84, 62, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(430, 'Juan Sebastian Veron', 'Argentina', 'CM', 90, 78, 72, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(431, 'Claude Makelele', 'France', 'CDM', 92, 66, 88, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(432, 'Didier Deschamps', 'France', 'CDM', 90, 68, 86, 88, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(433, 'Robert Pires', 'France', 'LW', 92, 86, 54, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(434, 'Eric Cantona', 'France', 'CAM', 93, 86, 58, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(435, 'David Ginola', 'France', 'LW', 91, 84, 52, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(436, 'Gianni Rivera', 'Italy', 'CAM', 93, 84, 60, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(437, 'Sandro Mazzola', 'Italy', 'CAM', 92, 82, 58, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(438, 'Enzo Francescoli', 'Uruguay', 'CAM', 94, 84, 60, 90, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(439, 'Carlos Valderrama', 'Colombia', 'CAM', 92, 80, 58, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(440, 'Jay-Jay Okocha', 'Nigeria', 'CAM', 93, 84, 58, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(441, 'Emre Belozoglu', 'Turkey', 'CM', 90, 74, 70, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(442, 'Gaizka Mendieta', 'Spain', 'CM', 90, 78, 72, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(443, 'Luis Enrique', 'Spain', 'CM', 90, 76, 72, 85, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(444, 'Pep Guardiola', 'Spain', 'CDM', 90, 66, 84, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(445, 'Michael Essien', 'Ghana', 'CDM', 91, 68, 84, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(446, 'Diego Maradona', 'Argentina', 'ST', 110, 112, 84, 115, 7, NULL, 0, 1, 4, 6, '2026-06-18 16:30:20'),
-(447, 'Alfredo Di Stefano', 'Argentina', 'ST', 98, 94, 56, 92, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(448, 'Ferenc Puskas', 'Hungary', 'ST', 97, 94, 52, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(449, 'Eusebio', 'Portugal', 'ST', 96, 92, 50, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(450, 'Gabriel Batistuta', 'Argentina', 'ST', 94, 90, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(451, 'Hernan Crespo', 'Argentina', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(452, 'Kenny Dalglish', 'Scotland', 'ST', 93, 90, 48, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(453, 'Ian Rush', 'Wales', 'ST', 91, 88, 44, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(454, 'Jari Litmanen', 'Finland', 'CAM', 128, 158, 132, 162, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
-(455, 'Sándor Kocsis', 'Hungary', 'ST', 92, 90, 44, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(456, 'Paolo Rossi', 'Italy', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(457, 'Luigi Riva', 'Italy', 'ST', 91, 88, 44, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(458, 'Mario Kempes', 'Argentina', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(459, 'Faustino Asprilla', 'Colombia', 'ST', 90, 86, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(460, 'Roger Milla', 'Cameroon', 'ST', 91, 86, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(461, 'Samuel Eto\'o', 'Cameroon', 'ST', 94, 90, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(462, 'Didier Drogba', 'Ivory Coast', 'ST', 93, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(463, 'Nwankwo Kanu', 'Nigeria', 'ST', 90, 86, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(464, 'Hakan Sukur', 'Turkey', 'ST', 90, 86, 44, 80, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(465, 'Jean-Pierre Papin', 'France', 'ST', 92, 90, 46, 84, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(466, 'Fernando Morientes', 'Spain', 'ST', 90, 88, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(467, 'Denis Law', 'Scotland', 'ST', 95, 92, 48, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(468, 'Billy Bremner', 'Scotland', 'CM', 124, 144, 140, 154, 7, NULL, 0, 1, 5, 18, '2026-06-18 16:30:20'),
-(469, 'Peter Lorimer', 'Scotland', 'ST', 90, 88, 44, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(470, 'Dave Mackay', 'Scotland', 'CDM', 90, 68, 86, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(471, 'John Charles', 'Wales', 'CB', 92, 56, 94, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(472, 'Ivor Allchurch', 'Wales', 'CAM', 90, 80, 56, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(473, 'George Best', 'Northern Ireland', 'RW', 136, 168, 134, 166, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
-(474, 'Pat Jennings', 'Northern Ireland', 'GK', 91, 42, 90, 83, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(475, 'Danny Blanchflower', 'Northern Ireland', 'CM', 90, 78, 72, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(476, 'Liam Brady', 'Ireland', 'CM', 90, 78, 70, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(477, 'Roy Keane', 'Ireland', 'CDM', 93, 66, 86, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(478, 'Franz Beckenbauer', 'Germany', 'CB', 99, 60, 98, 94, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(479, 'Gerd Muller', 'Germany', 'ST', 98, 94, 44, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(480, 'Lothar Matthaus', 'Germany', 'CM', 97, 84, 78, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(481, 'Jurgen Klinsmann', 'Germany', 'ST', 93, 88, 50, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(482, 'Miroslav Klose', 'Germany', 'ST', 94, 88, 48, 86, 7, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
-(483, 'Karl-Heinz Rummenigge', 'Germany', 'ST', 96, 90, 50, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(484, 'Pierre Littbarski', 'Germany', 'LW', 91, 84, 52, 84, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(485, 'Bernd Schuster', 'Germany', 'CM', 93, 80, 74, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(486, 'Marco van Basten', 'Netherlands', 'ST', 98, 92, 52, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(487, 'Ruud Gullit', 'Netherlands', 'CM', 97, 84, 74, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(488, 'Frank Rijkaard', 'Netherlands', 'CDM', 96, 70, 86, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(489, 'Dennis Bergkamp', 'Netherlands', 'CAM', 96, 86, 62, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(490, 'Clarence Seedorf', 'Netherlands', 'CM', 95, 80, 74, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(491, 'Edgar Davids', 'Netherlands', 'CDM', 94, 68, 84, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
-(492, 'Robin van Persie', 'Netherlands', 'ST', 94, 88, 50, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(493, 'Arjen Robben', 'Netherlands', 'RW', 96, 90, 52, 86, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
-(494, 'Wesley Sneijder', 'Netherlands', 'CAM', 95, 84, 58, 88, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
-(495, 'Ruud van Nistelrooy', 'Netherlands', 'ST', 95, 90, 46, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(496, 'Patrick Kluivert', 'Netherlands', 'ST', 93, 88, 48, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(497, 'Marc Overmars', 'Netherlands', 'LW', 93, 88, 52, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
-(498, 'Johan Cruyff', 'Netherlands', 'CAM', 137, 166, 144, 170, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
-(499, 'Player 17', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-18 16:31:08');
+(399, 'Lev Yashinov', 'Soviet Union', 'GK', 96, 45, 95, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(400, 'Gordon Bankso', 'England', 'GK', 94, 43, 93, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(401, 'Sepp Maiers', 'Germany', 'GK', 92, 42, 91, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(402, 'Edwin Van Der Saro', 'Netherlands', 'GK', 93, 44, 92, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(403, 'Petr Cecho', 'Czech Republic', 'GK', 92, 42, 90, 85, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(404, 'Ubaldo Fillolo', 'Argentina', 'GK', 91, 41, 89, 83, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(405, 'Jose Luis Chilaverto', 'Paraguay', 'GK', 90, 50, 88, 80, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(406, 'Bobby Mooreo', 'England', 'CB', 95, 58, 97, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(407, 'Ronald Koemano', 'Netherlands', 'CB', 94, 60, 94, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(408, 'Gaetano Scireao', 'Italy', 'CB', 93, 56, 95, 87, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(409, 'Daniel Passarellao', 'Argentina', 'CB', 93, 55, 94, 86, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(410, 'Elias Figueroao', 'Chile', 'CB', 93, 54, 95, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(411, 'Aldair Santos', 'Brazil', 'CB', 91, 52, 93, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(412, 'Luis Pereiras', 'Brazil', 'CB', 90, 50, 92, 83, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(413, 'Laurent Blancco', 'France', 'CB', 92, 56, 94, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(414, 'Frank De Boero', 'Netherlands', 'CB', 90, 54, 92, 84, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(415, 'Giacinto Facchettio', 'Italy', 'LB', 92, 72, 78, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(416, 'Paul Breitnero', 'Germany', 'LB', 91, 70, 76, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(417, 'Ruud Krolo', 'Netherlands', 'CB', 92, 56, 92, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(418, 'Bixente Lizarazuo', 'France', 'LB', 129, 146, 154, 161, 7, NULL, 0, 1, 1, 20, '2026-06-18 16:30:20'),
+(419, 'Giovanni Van Bronckhorsto', 'Netherlands', 'LB', 90, 70, 78, 84, 7, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
+(420, 'Luis Figoro', 'Portugal', 'RW', 134, 164, 136, 166, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
+(421, 'Gheorghe Hagio', 'Romania', 'CAM', 95, 86, 62, 91, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(422, 'Hristo Stoichkovo', 'Bulgaria', 'LW', 95, 88, 56, 89, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(423, 'Michael Laudrupo', 'Denmark', 'CAM', 94, 84, 60, 92, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(424, 'Brian Laudrupo', 'Denmark', 'RW', 90, 82, 52, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(425, 'Zvonimir Bobano', 'Croatia', 'CM', 90, 78, 70, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(426, 'Dejan Savicevico', 'Montenegro', 'CAM', 91, 82, 58, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(427, 'Dragan Stojkovico', 'Serbia', 'CAM', 90, 80, 56, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(428, 'Rui Costao', 'Portugal', 'CAM', 92, 82, 60, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(429, 'Deco Sousa', 'Portugal', 'CAM', 93, 84, 62, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(430, 'Juan Sebastian Verono', 'Argentina', 'CM', 90, 78, 72, 87, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(431, 'Claude Makeleleo', 'France', 'CDM', 92, 66, 88, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(432, 'Didier Deschampso', 'France', 'CDM', 90, 68, 86, 88, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(433, 'Robert Pireso', 'France', 'LW', 92, 86, 54, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(434, 'Eric Cantonao', 'France', 'CAM', 93, 86, 58, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(435, 'David Ginolao', 'France', 'LW', 91, 84, 52, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(436, 'Gianni Riverao', 'Italy', 'CAM', 93, 84, 60, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(437, 'Sandro Mazzolao', 'Italy', 'CAM', 92, 82, 58, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(438, 'Enzo Francescolio', 'Uruguay', 'CAM', 94, 84, 60, 90, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(439, 'Carlos Valderramao', 'Colombia', 'CAM', 92, 80, 58, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(440, 'Jay-Jay Okochao', 'Nigeria', 'CAM', 93, 84, 58, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(441, 'Emre Belozogluo', 'Turkey', 'CM', 90, 74, 70, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(442, 'Gaizka Mendietao', 'Spain', 'CM', 90, 78, 72, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(443, 'Luis Enriquee', 'Spain', 'CM', 90, 76, 72, 85, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(444, 'Pep Guardiolao', 'Spain', 'CDM', 90, 66, 84, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(445, 'Michael Essieno', 'Ghana', 'CDM', 91, 68, 84, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(446, 'Diego Maradonaz', 'Argentina', 'ST', 110, 112, 84, 115, 7, NULL, 0, 1, 4, 6, '2026-06-18 16:30:20'),
+(447, 'Alfredo Di Stefanos', 'Argentina', 'ST', 98, 94, 56, 92, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(448, 'Ferenc Puskaso', 'Hungary', 'ST', 97, 94, 52, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(449, 'Eusebio Da Silva', 'Portugal', 'ST', 96, 92, 50, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(450, 'Gabriel Batistutao', 'Argentina', 'ST', 94, 90, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(451, 'Hernan Crespoo', 'Argentina', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(452, 'Kenny Dalglishe', 'Scotland', 'ST', 93, 90, 48, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(453, 'Ian Rusho', 'Wales', 'ST', 91, 88, 44, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(454, 'Jari Litmaneno', 'Finland', 'CAM', 128, 158, 132, 162, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
+(455, 'Sandor Kocsiso', 'Hungary', 'ST', 92, 90, 44, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(456, 'Paolo Rossio', 'Italy', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(457, 'Luigi Rivao', 'Italy', 'ST', 91, 88, 44, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(458, 'Mario Kempeso', 'Argentina', 'ST', 92, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(459, 'Faustino Asprillao', 'Colombia', 'ST', 90, 86, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(460, 'Roger Millao', 'Cameroon', 'ST', 91, 86, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(461, 'Samuel Etoo', 'Cameroon', 'ST', 94, 90, 48, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(462, 'Didier Drogbao', 'Ivory Coast', 'ST', 93, 88, 46, 84, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(463, 'Nwankwo Kanuo', 'Nigeria', 'ST', 90, 86, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(464, 'Hakan Sukuro', 'Turkey', 'ST', 90, 86, 44, 80, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(465, 'Jean-Pierre Papino', 'France', 'ST', 92, 90, 46, 84, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(466, 'Fernando Morienteso', 'Spain', 'ST', 90, 88, 44, 82, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(467, 'Denis Lawo', 'Scotland', 'ST', 95, 92, 48, 88, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(468, 'Billy Bremnero', 'Scotland', 'CM', 124, 144, 140, 154, 7, NULL, 0, 1, 5, 18, '2026-06-18 16:30:20'),
+(469, 'Peter Lorimero', 'Scotland', 'ST', 90, 88, 44, 82, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(470, 'Dave Mackayo', 'Scotland', 'CDM', 90, 68, 86, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(471, 'John Charleso', 'Wales', 'CB', 92, 56, 94, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(472, 'Ivor Allchurcho', 'Wales', 'CAM', 90, 80, 56, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(473, 'George Besto', 'Northern Ireland', 'RW', 136, 168, 134, 166, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
+(474, 'Pat Jenningsso', 'Northern Ireland', 'GK', 91, 42, 90, 83, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(475, 'Danny Blanchflowero', 'Northern Ireland', 'CM', 90, 78, 72, 86, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(476, 'Liam Bradyo', 'Ireland', 'CM', 90, 78, 70, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(477, 'Roy Keano', 'Ireland', 'CDM', 93, 66, 86, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(478, 'Franz Beckenbauero', 'Germany', 'CB', 99, 60, 98, 94, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(479, 'Gerd Mullero', 'Germany', 'ST', 98, 94, 44, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(480, 'Lothar Matthauso', 'Germany', 'CM', 97, 84, 78, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(481, 'Jurgen Klinsmanno', 'Germany', 'ST', 93, 88, 50, 84, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(482, 'Miroslav Kloseo', 'Germany', 'ST', 94, 88, 48, 86, 7, NULL, 0, 1, 3, 1, '2026-06-18 16:30:20'),
+(483, 'Karl-Heinz Rummeniggeo', 'Germany', 'ST', 96, 90, 50, 87, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(484, 'Pierre Littbarskio', 'Germany', 'LW', 91, 84, 52, 84, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(485, 'Bernd Schustero', 'Germany', 'CM', 93, 80, 74, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(486, 'Marco Van Basteno', 'Netherlands', 'ST', 98, 92, 52, 88, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(487, 'Ruud Gullito', 'Netherlands', 'CM', 97, 84, 74, 90, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(488, 'Frank Rijkaardo', 'Netherlands', 'CDM', 96, 70, 86, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(489, 'Dennis Bergkampo', 'Netherlands', 'CAM', 96, 86, 62, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(490, 'Clarence Seedorfo', 'Netherlands', 'CM', 95, 80, 74, 90, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(491, 'Edgar Davidso', 'Netherlands', 'CDM', 94, 68, 84, 89, 7, NULL, 0, 1, 2, 1, '2026-06-18 16:30:20'),
+(492, 'Robin Van Persio', 'Netherlands', 'ST', 94, 88, 50, 86, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20'),
+(493, 'Arjen Robbeno', 'Netherlands', 'RW', 96, 90, 52, 86, 7, NULL, 0, 1, 4, 1, '2026-06-18 16:30:20'),
+(494, 'Wesley Sneijdero', 'Netherlands', 'CAM', 95, 84, 58, 88, 7, NULL, 0, 1, 5, 1, '2026-06-18 16:30:20');
 INSERT INTO `football_players` (`id`, `player_name`, `country`, `position`, `rating`, `offence`, `defence`, `teamwork`, `tier_id`, `card_image`, `is_custom`, `is_exclusive`, `owner_id`, `current_level`, `created_at`) VALUES
+(495, 'Ruud Van Nistelrooyo', 'Netherlands', 'ST', 95, 90, 46, 84, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(496, 'Patrick Kluiverte', 'Netherlands', 'ST', 93, 88, 48, 85, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(497, 'Marc Overmarso', 'Netherlands', 'LW', 93, 88, 52, 86, 7, NULL, 0, 1, 1, 1, '2026-06-18 16:30:20'),
+(498, 'Johan Cruyfio', 'Netherlands', 'CAM', 137, 166, 144, 170, 7, NULL, 0, 1, 5, 20, '2026-06-18 16:30:20'),
+(499, 'Player 17', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-18 16:31:08'),
 (500, 'Player 6', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-18 16:31:08'),
 (501, 'Player 12', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-18 16:31:08'),
 (502, 'Player 5', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, NULL, 1, '2026-06-18 16:31:17'),
@@ -641,29 +641,29 @@ INSERT INTO `football_players` (`id`, `player_name`, `country`, `position`, `rat
 (510, 'Player 9', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, 2, 1, '2026-06-18 16:48:44'),
 (511, 'Player 18', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, 2, 1, '2026-06-18 16:48:48'),
 (512, 'Player 20', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, 2, 1, '2026-06-18 16:48:49'),
-(513, 'Neil Etheridge', 'Philippines', 'GK', 126, 118, 166, 154, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(513, 'Neil Etherold', 'Philippines', 'GK', 126, 118, 166, 154, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
 (514, 'Kawin Thamsatchanan', 'Thailand', 'GK', 124, 116, 164, 152, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(515, 'Đặng Văn Lâm', 'Vietnam', 'GK', 87, 41, 89, 77, 9, NULL, 0, 1, 3, 1, '2026-06-18 16:49:51'),
-(516, 'Soh Chin Aun', 'Malaysia', 'CB', 90, 56, 92, 84, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
-(517, 'Baihakki Khaizan', 'Singapore', 'CB', 124, 130, 164, 156, 9, NULL, 0, 1, 5, 20, '2026-06-18 16:49:51'),
-(518, 'Theerathon Bunmathan', 'Thailand', 'LB', 89, 76, 78, 83, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
-(519, 'Quế Ngọc Hải', 'Vietnam', 'CB', 88, 55, 90, 82, 9, NULL, 0, 1, 4, 1, '2026-06-18 16:49:51'),
-(520, 'Jordi Amat', 'Indonesia', 'CB', 87, 54, 89, 81, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
-(521, 'Daniel Bennett', 'Singapore', 'CB', 123, 128, 163, 155, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(522, 'Đoàn Văn Hậu', 'Vietnam', 'LB', 86, 74, 76, 80, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
-(523, 'Chanathip Songkrasin', 'Thailand', 'CAM', 129, 160, 138, 164, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(524, 'Nguyễn Quang Hải', 'Vietnam', 'CAM', 90, 83, 60, 87, 9, NULL, 0, 1, 3, 1, '2026-06-18 16:49:51'),
-(525, 'Hariss Harun', 'Singapore', 'CDM', 125, 142, 160, 160, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(526, 'Safiq Rahim', 'Malaysia', 'CM', 86, 76, 72, 82, 9, NULL, 0, 1, 4, 1, '2026-06-18 16:49:51'),
+(515, 'Dang Van Lamz', 'Vietnam', 'GK', 87, 41, 89, 77, 9, NULL, 0, 1, 3, 1, '2026-06-18 16:49:51'),
+(516, 'Soh Chin Aunz', 'Malaysia', 'CB', 90, 56, 92, 84, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
+(517, 'Baihakki Khaizano', 'Singapore', 'CB', 124, 130, 164, 156, 9, NULL, 0, 1, 5, 20, '2026-06-18 16:49:51'),
+(518, 'Theerathon Bunmathano', 'Thailand', 'LB', 89, 76, 78, 83, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
+(519, 'Que Ngoc Haiz', 'Vietnam', 'CB', 88, 55, 90, 82, 9, NULL, 0, 1, 4, 1, '2026-06-18 16:49:51'),
+(520, 'Jordi Amattt', 'Indonesia', 'CB', 87, 54, 89, 81, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
+(521, 'Daniel Bennetto', 'Singapore', 'CB', 123, 128, 163, 155, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(522, 'Doan Van Hau', 'Vietnam', 'LB', 86, 74, 76, 80, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
+(523, 'Chanathip Songkrasino', 'Thailand', 'CAM', 129, 160, 138, 164, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(524, 'Nguyen Quang Haii', 'Vietnam', 'CAM', 90, 83, 60, 87, 9, NULL, 0, 1, 3, 1, '2026-06-18 16:49:51'),
+(525, 'Hariss Haruno', 'Singapore', 'CDM', 125, 142, 160, 160, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(526, 'Safiq Rahimz', 'Malaysia', 'CM', 86, 76, 72, 82, 9, NULL, 0, 1, 4, 1, '2026-06-18 16:49:51'),
 (527, 'Kiatisuk Senamuang', 'Thailand', 'CAM', 130, 162, 136, 162, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(528, 'Thom Haye', 'Indonesia', 'CM', 87, 78, 74, 83, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
-(529, 'Bambang Pamungkas', 'Indonesia', 'ST', 129, 165, 124, 160, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(530, 'Teerasil Dangda', 'Thailand', 'ST', 128, 164, 122, 159, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(531, 'Lê Công Vinh', 'Vietnam', 'ST', 127, 163, 122, 158, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
-(532, 'Safee Sali', 'Malaysia', 'ST', 88, 86, 44, 81, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
-(533, 'Noh Alam Shah', 'Singapore', 'ST', 89, 87, 44, 82, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
-(534, 'Mokhtar Dahari', 'Malaysia', 'ST', 131, 168, 120, 162, 9, NULL, 0, 1, 1, 20, '2026-06-18 16:49:51'),
-(535, 'Cristian Gonzáles', 'Indonesia', 'ST', 90, 88, 46, 82, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
+(528, 'Thom Hayeo', 'Indonesia', 'CM', 87, 78, 74, 83, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
+(529, 'Bambang Pamungkaszz', 'Indonesia', 'ST', 129, 165, 124, 160, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(530, 'Teerasil Dangdaz', 'Thailand', 'ST', 128, 164, 122, 159, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(531, 'Le Cong Vinh', 'Vietnam', 'ST', 127, 163, 122, 158, 9, NULL, 0, 1, 2, 20, '2026-06-18 16:49:51'),
+(532, 'Safee Saliz', 'Malaysia', 'ST', 88, 86, 44, 81, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
+(533, 'Noh Alam Shahz', 'Singapore', 'ST', 89, 87, 44, 82, 9, NULL, 0, 1, 1, 1, '2026-06-18 16:49:51'),
+(534, 'Mokhtar Dahariz', 'Malaysia', 'ST', 131, 168, 120, 162, 9, NULL, 0, 1, 1, 20, '2026-06-18 16:49:51'),
+(535, 'Cristian Gonzalesz', 'Indonesia', 'ST', 90, 88, 46, 82, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
 (536, 'Kurniawan Dwi Yulianto', 'Indonesia', 'ST', 89, 87, 44, 81, 9, NULL, 0, 1, 2, 1, '2026-06-18 16:49:51'),
 (537, 'Player 3', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, 2, 1, '2026-06-18 16:50:45'),
 (538, 'Player 7', 'Unknown', 'ST', 45, 35, 35, 35, 1, NULL, 0, 0, 2, 1, '2026-06-18 16:50:45'),
@@ -812,21 +812,21 @@ INSERT INTO `football_players` (`id`, `player_name`, `country`, `position`, `rat
 --
 
 CREATE TABLE `f_player_tier` (
-  `id` int UNSIGNED NOT NULL,
-  `tier_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tier_order` tinyint UNSIGNED NOT NULL,
-  `rating_min` tinyint UNSIGNED NOT NULL,
-  `rating_max` tinyint UNSIGNED NOT NULL,
-  `base_offence` tinyint UNSIGNED NOT NULL,
-  `base_defence` tinyint UNSIGNED NOT NULL,
-  `base_teamwork` tinyint UNSIGNED NOT NULL,
-  `upgrade_base_cost` int UNSIGNED NOT NULL,
-  `upgrade_stat_per_level` tinyint UNSIGNED NOT NULL,
-  `card_color` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `card_color_secondary` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `card_color_tertiary` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_exclusive` tinyint(1) NOT NULL DEFAULT '0',
-  `pr_token_cost` int UNSIGNED DEFAULT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `tier_name` varchar(20) NOT NULL,
+  `tier_order` tinyint(3) UNSIGNED NOT NULL,
+  `rating_min` tinyint(3) UNSIGNED NOT NULL,
+  `rating_max` tinyint(3) UNSIGNED NOT NULL,
+  `base_offence` tinyint(3) UNSIGNED NOT NULL,
+  `base_defence` tinyint(3) UNSIGNED NOT NULL,
+  `base_teamwork` tinyint(3) UNSIGNED NOT NULL,
+  `upgrade_base_cost` int(10) UNSIGNED NOT NULL,
+  `upgrade_stat_per_level` tinyint(3) UNSIGNED NOT NULL,
+  `card_color` varchar(50) NOT NULL,
+  `card_color_secondary` varchar(50) DEFAULT NULL,
+  `card_color_tertiary` varchar(50) DEFAULT NULL,
+  `is_exclusive` tinyint(1) NOT NULL DEFAULT 0,
+  `pr_token_cost` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -852,12 +852,12 @@ INSERT INTO `f_player_tier` (`id`, `tier_name`, `tier_order`, `rating_min`, `rat
 --
 
 CREATE TABLE `gacha_log` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `player_id` int UNSIGNED NOT NULL,
-  `tier_result` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pity_count` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `spun_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(10) UNSIGNED NOT NULL,
+  `tier_result` varchar(20) NOT NULL,
+  `pity_count` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `spun_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5047,14 +5047,14 @@ INSERT INTO `gacha_log` (`id`, `user_id`, `player_id`, `tier_result`, `pity_coun
 --
 
 CREATE TABLE `inbox` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `type` enum('tournament','match','reward','system') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'system',
-  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT '0',
-  `data` json DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `type` enum('tournament','match','reward','system') NOT NULL DEFAULT 'system',
+  `title` varchar(100) NOT NULL,
+  `message` text NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`data`)),
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5098,14 +5098,14 @@ INSERT INTO `inbox` (`id`, `user_id`, `type`, `title`, `message`, `is_read`, `da
 --
 
 CREATE TABLE `inventory_players` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `euro` bigint UNSIGNED NOT NULL DEFAULT '0',
-  `gems` int UNSIGNED NOT NULL DEFAULT '0',
-  `tr_token` int UNSIGNED NOT NULL DEFAULT '0',
-  `win_token` int UNSIGNED NOT NULL DEFAULT '0',
-  `pr_token` int UNSIGNED NOT NULL DEFAULT '0',
-  `first_10spin_used` tinyint(1) NOT NULL DEFAULT '0'
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `euro` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `gems` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `tr_token` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `win_token` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `pr_token` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `first_10spin_used` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5126,10 +5126,10 @@ INSERT INTO `inventory_players` (`id`, `user_id`, `euro`, `gems`, `tr_token`, `w
 --
 
 CREATE TABLE `lineups` (
-  `id` int UNSIGNED NOT NULL,
-  `team_id` int UNSIGNED NOT NULL,
-  `formation` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '4-3-3',
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `team_id` int(10) UNSIGNED NOT NULL,
+  `formation` varchar(10) NOT NULL DEFAULT '4-3-3',
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5150,12 +5150,12 @@ INSERT INTO `lineups` (`id`, `team_id`, `formation`, `updated_at`) VALUES
 --
 
 CREATE TABLE `lineup_players` (
-  `id` int UNSIGNED NOT NULL,
-  `lineup_id` int UNSIGNED NOT NULL,
-  `player_id` int UNSIGNED NOT NULL,
-  `slot_type` enum('starting','bench') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'starting',
-  `slot_index` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `position` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `lineup_id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(10) UNSIGNED NOT NULL,
+  `slot_type` enum('starting','bench') NOT NULL DEFAULT 'starting',
+  `slot_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `position` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5266,11 +5266,11 @@ INSERT INTO `lineup_players` (`id`, `lineup_id`, `player_id`, `slot_type`, `slot
 --
 
 CREATE TABLE `market_listings` (
-  `id` int UNSIGNED NOT NULL,
-  `seller_id` int UNSIGNED NOT NULL,
-  `player_id` int UNSIGNED NOT NULL,
-  `price` bigint UNSIGNED NOT NULL,
-  `listed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `seller_id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(10) UNSIGNED NOT NULL,
+  `price` bigint(20) UNSIGNED NOT NULL,
+  `listed_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5287,17 +5287,17 @@ INSERT INTO `market_listings` (`id`, `seller_id`, `player_id`, `price`, `listed_
 --
 
 CREATE TABLE `match_log` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `bot_team_id` int UNSIGNED NOT NULL,
-  `user_power` int UNSIGNED NOT NULL DEFAULT '0',
-  `bot_power` int UNSIGNED NOT NULL DEFAULT '0',
-  `result` enum('win','lose') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `euro_earned` bigint UNSIGNED NOT NULL DEFAULT '0',
-  `gems_earned` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `tr_token_earned` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `win_token_earned` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `played_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `bot_team_id` int(10) UNSIGNED NOT NULL,
+  `user_power` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `bot_power` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `result` enum('win','lose') NOT NULL,
+  `euro_earned` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `gems_earned` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `tr_token_earned` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `win_token_earned` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `played_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5413,9 +5413,9 @@ INSERT INTO `match_log` (`id`, `user_id`, `bot_team_id`, `user_power`, `bot_powe
 --
 
 CREATE TABLE `pity_tracker` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `spin_count_since_pity` tinyint UNSIGNED NOT NULL DEFAULT '0'
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `spin_count_since_pity` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5436,9 +5436,9 @@ INSERT INTO `pity_tracker` (`id`, `user_id`, `spin_count_since_pity`) VALUES
 --
 
 CREATE TABLE `player_skills` (
-  `id` int UNSIGNED NOT NULL,
-  `player_id` int UNSIGNED NOT NULL,
-  `skill_id` int UNSIGNED NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(10) UNSIGNED NOT NULL,
+  `skill_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5516,11 +5516,11 @@ INSERT INTO `player_skills` (`id`, `player_id`, `skill_id`) VALUES
 --
 
 CREATE TABLE `skills` (
-  `id` int UNSIGNED NOT NULL,
-  `skill_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `effect_type` enum('offence','defence','teamwork','power') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `skill_name` varchar(50) NOT NULL,
+  `effect_type` enum('offence','defence','teamwork','power') NOT NULL,
   `effect_value` decimal(5,2) NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5546,11 +5546,11 @@ INSERT INTO `skills` (`id`, `skill_name`, `effect_type`, `effect_value`, `descri
 --
 
 CREATE TABLE `teams` (
-  `id` int UNSIGNED NOT NULL,
-  `team_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tier_id` int UNSIGNED NOT NULL,
-  `team_power` int UNSIGNED NOT NULL DEFAULT '0'
+  `id` int(10) UNSIGNED NOT NULL,
+  `team_name` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `tier_id` int(10) UNSIGNED NOT NULL,
+  `team_power` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5576,9 +5576,9 @@ INSERT INTO `teams` (`id`, `team_name`, `country`, `tier_id`, `team_power`) VALU
 --
 
 CREATE TABLE `team_members` (
-  `id` int UNSIGNED NOT NULL,
-  `team_id` int UNSIGNED NOT NULL,
-  `player_id` int UNSIGNED NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `team_id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -6231,12 +6231,12 @@ INSERT INTO `team_members` (`id`, `team_id`, `player_id`) VALUES
 --
 
 CREATE TABLE `team_tier` (
-  `id` int UNSIGNED NOT NULL,
-  `tier_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tier_order` tinyint UNSIGNED NOT NULL,
-  `power_min` int UNSIGNED NOT NULL,
-  `power_max` int UNSIGNED NOT NULL,
-  `bonus_multiplier` decimal(4,2) NOT NULL DEFAULT '1.00'
+  `id` int(10) UNSIGNED NOT NULL,
+  `tier_name` varchar(20) NOT NULL,
+  `tier_order` tinyint(3) UNSIGNED NOT NULL,
+  `power_min` int(10) UNSIGNED NOT NULL,
+  `power_max` int(10) UNSIGNED NOT NULL,
+  `bonus_multiplier` decimal(4,2) NOT NULL DEFAULT 1.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -6257,15 +6257,15 @@ INSERT INTO `team_tier` (`id`, `tier_name`, `tier_order`, `power_min`, `power_ma
 --
 
 CREATE TABLE `tournaments` (
-  `id` int UNSIGNED NOT NULL,
-  `creator_id` int UNSIGNED NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `max_participants` int UNSIGNED NOT NULL DEFAULT '8',
-  `entry_fee` int UNSIGNED NOT NULL DEFAULT '0',
-  `prize_pool` int UNSIGNED NOT NULL DEFAULT '0',
-  `status` enum('open','active','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'open',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` int(10) UNSIGNED NOT NULL,
+  `creator_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `max_participants` int(10) UNSIGNED NOT NULL DEFAULT 8,
+  `entry_fee` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `prize_pool` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `status` enum('open','active','completed') NOT NULL DEFAULT 'open',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   `started_at` timestamp NULL DEFAULT NULL,
   `completed_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -6286,16 +6286,16 @@ INSERT INTO `tournaments` (`id`, `creator_id`, `name`, `description`, `max_parti
 --
 
 CREATE TABLE `tournament_matches` (
-  `id` int UNSIGNED NOT NULL,
-  `tournament_id` int UNSIGNED NOT NULL,
-  `round` int UNSIGNED NOT NULL,
-  `match_order` int UNSIGNED NOT NULL,
-  `user1_id` int UNSIGNED DEFAULT NULL,
-  `user2_id` int UNSIGNED DEFAULT NULL,
-  `user1_score` int UNSIGNED DEFAULT NULL,
-  `user2_score` int UNSIGNED DEFAULT NULL,
-  `winner_id` int UNSIGNED DEFAULT NULL,
-  `status` enum('pending','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `id` int(10) UNSIGNED NOT NULL,
+  `tournament_id` int(10) UNSIGNED NOT NULL,
+  `round` int(10) UNSIGNED NOT NULL,
+  `match_order` int(10) UNSIGNED NOT NULL,
+  `user1_id` int(10) UNSIGNED DEFAULT NULL,
+  `user2_id` int(10) UNSIGNED DEFAULT NULL,
+  `user1_score` int(10) UNSIGNED DEFAULT NULL,
+  `user2_score` int(10) UNSIGNED DEFAULT NULL,
+  `winner_id` int(10) UNSIGNED DEFAULT NULL,
+  `status` enum('pending','completed') NOT NULL DEFAULT 'pending',
   `played_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -6320,18 +6320,18 @@ INSERT INTO `tournament_matches` (`id`, `tournament_id`, `round`, `match_order`,
 --
 
 CREATE TABLE `tournament_participants` (
-  `id` int UNSIGNED NOT NULL,
-  `tournament_id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `position` int UNSIGNED DEFAULT NULL,
-  `prize_claimed` tinyint(1) NOT NULL DEFAULT '0',
-  `prize_euro` int UNSIGNED DEFAULT NULL,
-  `prize_gems` int UNSIGNED DEFAULT NULL,
-  `prize_tr_token` int UNSIGNED DEFAULT NULL,
-  `prize_pr_token` int UNSIGNED DEFAULT NULL,
-  `prize_player_id` int UNSIGNED DEFAULT NULL,
-  `prize_title` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `joined_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `tournament_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `position` int(10) UNSIGNED DEFAULT NULL,
+  `prize_claimed` tinyint(1) NOT NULL DEFAULT 0,
+  `prize_euro` int(10) UNSIGNED DEFAULT NULL,
+  `prize_gems` int(10) UNSIGNED DEFAULT NULL,
+  `prize_tr_token` int(10) UNSIGNED DEFAULT NULL,
+  `prize_pr_token` int(10) UNSIGNED DEFAULT NULL,
+  `prize_player_id` int(10) UNSIGNED DEFAULT NULL,
+  `prize_title` varchar(50) DEFAULT NULL,
+  `joined_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -6359,13 +6359,13 @@ INSERT INTO `tournament_participants` (`id`, `tournament_id`, `user_id`, `positi
 --
 
 CREATE TABLE `users` (
-  `id` int UNSIGNED NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fullname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `free_spin_used` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `fullname` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `free_spin_used` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -6386,20 +6386,20 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `country`, `free_
 --
 
 CREATE TABLE `user_teams` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `team_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Your Team',
-  `team_power` int UNSIGNED NOT NULL DEFAULT '0',
-  `team_value` bigint UNSIGNED NOT NULL DEFAULT '0',
-  `power_level_euro` int UNSIGNED NOT NULL DEFAULT '1',
-  `power_level_wintoken` int UNSIGNED NOT NULL DEFAULT '1',
-  `income_level_euro` int UNSIGNED NOT NULL DEFAULT '1',
-  `income_level_wintoken` int UNSIGNED NOT NULL DEFAULT '1',
-  `power_upgrade_cost_euro` bigint UNSIGNED NOT NULL DEFAULT '100',
-  `power_upgrade_cost_wintoken` int UNSIGNED NOT NULL DEFAULT '1',
-  `income_upgrade_cost_euro` bigint UNSIGNED NOT NULL DEFAULT '100',
-  `income_upgrade_cost_wintoken` int UNSIGNED NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `team_name` varchar(100) NOT NULL DEFAULT 'Your Team',
+  `team_power` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `team_value` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `power_level_euro` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `power_level_wintoken` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `income_level_euro` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `income_level_wintoken` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `power_upgrade_cost_euro` bigint(20) UNSIGNED NOT NULL DEFAULT 100,
+  `power_upgrade_cost_wintoken` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `income_upgrade_cost_euro` bigint(20) UNSIGNED NOT NULL DEFAULT 100,
+  `income_upgrade_cost_wintoken` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -6579,127 +6579,127 @@ ALTER TABLE `user_teams`
 -- AUTO_INCREMENT for table `daily_quest_definitions`
 --
 ALTER TABLE `daily_quest_definitions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `football_players`
 --
 ALTER TABLE `football_players`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=676;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=676;
 
 --
 -- AUTO_INCREMENT for table `f_player_tier`
 --
 ALTER TABLE `f_player_tier`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `gacha_log`
 --
 ALTER TABLE `gacha_log`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4171;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4171;
 
 --
 -- AUTO_INCREMENT for table `inbox`
 --
 ALTER TABLE `inbox`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `inventory_players`
 --
 ALTER TABLE `inventory_players`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `lineups`
 --
 ALTER TABLE `lineups`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `lineup_players`
 --
 ALTER TABLE `lineup_players`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=746;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=746;
 
 --
 -- AUTO_INCREMENT for table `market_listings`
 --
 ALTER TABLE `market_listings`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `match_log`
 --
 ALTER TABLE `match_log`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `pity_tracker`
 --
 ALTER TABLE `pity_tracker`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `player_skills`
 --
 ALTER TABLE `player_skills`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `team_members`
 --
 ALTER TABLE `team_members`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=690;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=690;
 
 --
 -- AUTO_INCREMENT for table `team_tier`
 --
 ALTER TABLE `team_tier`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tournaments`
 --
 ALTER TABLE `tournaments`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tournament_matches`
 --
 ALTER TABLE `tournament_matches`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tournament_participants`
 --
 ALTER TABLE `tournament_participants`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_teams`
 --
 ALTER TABLE `user_teams`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
